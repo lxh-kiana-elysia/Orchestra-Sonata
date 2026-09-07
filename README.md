@@ -37,10 +37,11 @@
 |---|---|
 | [`GDD.docx`](GDD.docx) | 游戏设计文档 **v1.4**（设计宪法：玩法规则、数值、流程、UI 分层、视觉规范） |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | **技术架构**：分层、模块职责与交互、关键接口、数据流 |
+| [`FDD.md`](FDD.md) | **详细功能设计**：各系统状态机、关键逻辑、验收点、数值配置汇总 |
 | [`agent.md`](agent.md) | AI 代码开发执行手册 **v3.1**（职责边界、工作流程、代码标准、协作规范） |
 | [`README.md`](README.md) | 本文件（项目概览） |
 
-> 开发入口建议：先看 `ARCHITECTURE.md` 了解系统全貌，再按 `agent.md` 的规范动手；规则细节查 `GDD.docx`。
+> 开发入口建议：先看 `ARCHITECTURE.md` 了解系统全貌 → 查 `FDD.md` 获取具体模块的流程与验收点 → 按 `agent.md` 规范动手；规则细节与数值查 `GDD.docx`。
 
 ## 目录结构
 
