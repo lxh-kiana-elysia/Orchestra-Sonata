@@ -37,11 +37,13 @@
 |---|---|
 | [`GDD.docx`](GDD.docx) | 游戏设计文档 **v1.4**（设计宪法：玩法规则、数值、流程、UI 分层、视觉规范） |
 | [`ARCHITECTURE.md`](ARCHITECTURE.md) | **技术架构**：分层、模块职责与交互、关键接口、数据流 |
-| [`FDD.md`](FDD.md) | **详细功能设计**：各系统状态机、关键逻辑、验收点、数值配置汇总 |
+| [`FDD.md`](FDD.md) | **详细功能设计** v1.2：各系统状态机、关键逻辑、验收点、数值配置汇总、测试场景清单 |
+| [`UI_Interaction_Spec.md`](UI_Interaction_Spec.md) | **界面交互规范**：F1-F14 的文字化交互规则（点击/快捷键/弹窗/返回路径），供程序直接对照实现 |
 | [`agent.md`](agent.md) | AI 代码开发执行手册 **v3.1**（职责边界、工作流程、代码标准、协作规范） |
 | [`README.md`](README.md) | 本文件（项目概览） |
 
-> 开发入口建议：先看 `ARCHITECTURE.md` 了解系统全貌 → 查 `FDD.md` 获取具体模块的流程与验收点 → 按 `agent.md` 规范动手；规则细节与数值查 `GDD.docx`。
+> 开发入口建议：先看 `ARCHITECTURE.md` 了解系统全貌 → 查 `FDD.md` 获取模块流程与验收点 → 按 `UI_Interaction_Spec.md` 实现界面交互 → 遵循 `agent.md` 规范；规则与数值查 `GDD.docx`。
+> **文档分工**：GDD 是规则唯一权威（玩法/数值/公式）；FDD 只写实现规格；UI_Interaction_Spec 只写交互行为（不含美术风格）。
 
 ## 目录结构
 

@@ -167,7 +167,7 @@
 | 事件解耦 | 跨系统通信用 EventManager，避免高频 `FindObjectOfType` |
 | 性能 | Update 中禁止 `Find`/`GetComponent`/字符串拼接；缓存引用；提示用对象池 |
 | 帧率 | 目标 60fps（最低 30fps）；资源加载用 Addressables 延迟加载 |
-| 存档 | JSON 存 `persistentDataPath/Saves/`，含版本号字段便于迁移 |
+| 存档 | JSON 存 `persistentDataPath/ResonanceShelter/Saves/`，含版本号字段便于迁移 |
 
 ### 4.3 Unity 特定约定
 
@@ -303,7 +303,7 @@
 
 | 待定项 | 状态 | 归属 |
 |---|---|---|
-| 工程与存档目录名 `[项目名]` | 占位 | 人类定 |
+| ~~工程与存档目录名~~ | ✅ 已定稿 **ResonanceShelter** | — |
 | 完整版 10 支乐队中段顺序 | 已定首尾（Poppin'Party → 梦限大 MewType） | 人类定 |
 | 四维成长数值 / 成功率梯度 | 占位系数 | 人类定 |
 | 能源配额曲线（Day1≈300 / 每 10 天 ×1.8~2.2） | 草案 | 人类定 |

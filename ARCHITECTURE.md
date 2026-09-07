@@ -325,7 +325,7 @@ public interface ITrialSystem {
 
 ```
 常规存档：GameManager 汇总（天数 / 资源 / 角色 / 异想体 / 剧情进度 / 编成）
-   → SaveSystem 序列化为 JSON → 写 persistentDataPath/Saves/
+   → SaveSystem 序列化为 JSON → 写 persistentDataPath/ResonanceShelter/Saves/
 
 记忆日锚定：记忆日（Day 5/10/…/45）当天打开编成界面时
    → SaveSystem 另存一份快照 snapshot_dayN.json
