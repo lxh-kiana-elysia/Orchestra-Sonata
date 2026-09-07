@@ -2,7 +2,7 @@
 
 > 一个《BanG Dream!》二次同人 × 《脑叶公司》式收容管理玩法的叙事驱动同人游戏（免费，Steam/Windows）。
 
-**当前阶段：文档定稿，Unity 工程搭建中（Phase 0）** · 设计文档版本 **GDD v1.2**
+**当前阶段：文档齐备（GDD v1.4 / 架构 v1.0 / 手册 v3.1），Unity 工程搭建中（Phase 0）** · 设计文档版本 **GDD v1.4**
 
 ---
 
@@ -35,18 +35,22 @@
 
 | 文件 | 说明 |
 |---|---|
-| [`GDD.docx`](GDD.docx) | 游戏设计文档 **v1.2**（P0-P2 全量规则定稿，规则唯一来源） |
-| [`agent.md`](agent.md) | AI / 协作开发者执行手册（规则约束 + 数据契约 + 开发顺序） |
+| [`GDD.docx`](GDD.docx) | 游戏设计文档 **v1.4**（设计宪法：玩法规则、数值、流程、UI 分层、视觉规范） |
+| [`ARCHITECTURE.md`](ARCHITECTURE.md) | **技术架构**：分层、模块职责与交互、关键接口、数据流 |
+| [`agent.md`](agent.md) | AI 代码开发执行手册 **v3.1**（职责边界、工作流程、代码标准、协作规范） |
 | [`README.md`](README.md) | 本文件（项目概览） |
+
+> 开发入口建议：先看 `ARCHITECTURE.md` 了解系统全貌，再按 `agent.md` 的规范动手；规则细节查 `GDD.docx`。
 
 ## 目录结构
 
 ```
 .
-├── GDD.docx / agent.md / README.md
+├── GDD.docx / ARCHITECTURE.md / agent.md / README.md
 ├── GDD_v1.0_备份_20260906.docx   # v1.0 原始备份
+├── *.png                         # 15 张脑叶界面参考图（F1-F14）
 ├── LICENSE                        # MIT
-└── 乐团鸣曲/                      # Unity 6.0.38f1 工程（开发中）
+└── 乐团鸣曲/                      # Unity 6.0.38f1 工程（URP 2D 模板，开发中）
 ```
 
 ## 技术栈
