@@ -1,6 +1,6 @@
 # FDD.md — 乐团鸣曲 详细功能设计文档
 
-> 文档版本：v1.2（2026-09-07）
+> 文档版本：v1.3（2026-09-08）
 > 上游依据：`GDD.docx` v1.4 · `ARCHITECTURE.md` v1.0 · `agent.md` v3.1
 > 定位：把 GDD 中的规则**拆解为可实现的技术规格**——状态机、流程图、数据结构、配置项、边界条件。
 >
@@ -408,6 +408,71 @@ class WaypointGraph {
 
 ---
 
+---
+
+## FDD-10 异想体数据规格（含"未奏响的乐章"定稿）
+
+### 10.1 workModifiers 语义（**乘数**，基准 1.0）
+- 依据 GDD §3.4：`最终成功率 = min(1, 基础成功率 × (判定属性值/120) × 异想体修正)`
+- `workModifiers` 一律以**乘数**存储，基准 **1.0**（1.0=无修正，>1 提升，<1 降低）。
+- **禁止负值**（负乘数会产生负成功率）；极低下限取 `0.1`。
+- GDD 样例中写作 `+0.2 / 0 / -0.1 / -0.3` 的加值写法，实际存储为 `1.2 / 1.0 / 0.9 / 0.7`。
+
+### 10.2 新增字段：specialEffects（因"未奏响的乐章"引入）
+承载"工作结果为优/满产出"等异想体专属效果，由 `WorkSystem` 在结算后读取执行。
+
+```jsonc
+"specialEffects": [
+  { "trigger": "workResultExcellent", "effect": "restoreSp", "target": "worker",     "value": 8 },
+  { "trigger": "fullOutput",          "effect": "restoreSp", "target": "department", "value": 5 }
+]
+```
+- `trigger`：`workResultExcellent`（结果为优） / `fullOutput`（本次满产出） / 后续可扩展
+- `effect`：`restoreSp`（恢复精神） / `restoreHp` / 其他（按需扩展）
+- `target`：`worker`（执行工作的员工） / `department`（该部门所有员工）
+- `value`：**占位值，待实测调参**（关联 GDD §3.4）
+
+### 10.3 "未奏响的乐章" 完整数据（供填入 Aberrations.json）
+> 定稿 2026-09-08；由程序 AI/开发者填入 `Assets/Data/Aberrations.json`，本文档只给规格、不直接创建工程文件。
+
+```jsonc
+{
+  "id": "aber_score_01",
+  "name": "未奏响的乐章",
+  "type": "回忆型",
+  "riskLevel": 1,                       // ZAYIN：完全无害，无派遣门槛
+  "mood": 50,
+  "moodDangerMin": 0,                   // 无危险窗口（ZAYIN 不触发出逃）
+  "moodDangerMax": 100,
+  "linkedCharacterId": "anon_chihaya",  // 千早爱音（MyGO!!!!!）
+  "workModifiers": [                    // 乘数，基准 1.0
+    { "workType": "Performance", "modifier": 1.3 },
+    { "workType": "Creation",    "modifier": 1.1 },
+    { "workType": "Talk",        "modifier": 1.0 },
+    { "workType": "Combat",      "modifier": 0.5 }
+  ],
+  "pointsPerSuccess": 10,               // 情感粒子（成功基准值）；失败约 25%
+  "storyUnlockThresholds": [0, 20, 50],
+  "escapeTrigger": null,                // ZAYIN 无出逃
+  "escapeBehavior": null,
+  "suppressMethod": null,
+  "specialEffects": [
+    { "trigger": "workResultExcellent", "effect": "restoreSp", "target": "worker",     "value": 8 },
+    { "trigger": "fullOutput",          "effect": "restoreSp", "target": "department", "value": 5 }
+  ],
+  "background": "一段从未被奏响的旋律，凝固成了等待知音的空谱。它没有过去，只在等待一个能赋予它意义的人。"
+}
+```
+
+### 10.4 验收点
+- [ ] 该异想体可被收容、可对它执行 4 种工作
+- [ ] 演奏成功率最高、比武极低（乘数生效，无负值）
+- [ ] 工作结果为"优"时，执行员工精神值恢复
+- [ ] 满产出时，该部门所有员工精神值恢复
+- [ ] ZAYIN 无出逃：情绪值归零/爆满均不触发出逃事件
+
+---
+
 ## 11. 测试场景清单（Phase 0-2 需创建）
 
 > 依据 agent.md §6 测试规范：纯逻辑用单元测试（EditMode），系统流程用最小测试场景。
@@ -438,5 +503,6 @@ class WaypointGraph {
 | 日期 | 版本 | 说明 |
 |---|---|---|
 | 2026-09-07 | v1.0 | 初版：8 个模块 FDD（日循环/工作/异想体/员工/考验/存档/剧情/编成节点），含状态机、关键逻辑、验收点；数值配置汇总与 7 项待确认清单。**不含美术风格**（项目美术不基于脑叶） |
+| 2026-09-08 | v1.3 | 新增 FDD-10 异想体数据规格：workModifiers 明确为**乘数**（基准1.0，禁负值）；新增 specialEffects 字段（工作结果为优/满产出触发效果）；收录「未奏响的乐章」完整 JSON 规格（aber_score_01，ZAYIN/回忆型/对应千早爱音/产出情感粒子）与验收点
 | 2026-09-07 | v1.2 | 明确与 GDD 的分工（GDD=规则权威，FDD=实现规格，去除重复定义）；FDD-02 判定规则改为引用 GDD；新增 §11 测试场景清单（6 个场景 + 5 组单测）；存档目录名统一 ResonanceShelter（同步 GDD/ARCHITECTURE/agent）
 | 2026-09-07 | v1.1 | 落实 7 项待确认决策（用户拍板）：①未达标**无法结束当天**须达标或重开（GDD §3.11 同步修订）；②考验日配额 **×1.3**；③递减曲线 `1/(1+0.2(n-1))`；④成长系数 成功 `×0.10` / 失败 `×0.03`；⑤乐队少女训练**无约束**；⑥寻路采用**路点 Waypoint**（新增 FDD-09，含决策理由与实现方式）；⑦存档目录名 **ResonanceShelter**。§9 标记已定稿项，§10 保留 4 项待实测调参 |
