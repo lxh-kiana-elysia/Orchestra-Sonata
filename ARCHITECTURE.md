@@ -62,7 +62,7 @@
 └───────────────┬─────────────────────────────────┘
                 │ 序列化
 ┌───────────────▼─────────────────────────────────┐
-│  数据层：Assets/Data/*.json  +  ScriptableObject │
+│  数据层：Assets/Data/*.json（BandMembers 独立）+  ScriptableObject │
 │  Characters · Aberrations · GameConfig · Dialogues│
 └─────────────────────────────────────────────────┘
 
@@ -288,7 +288,10 @@ public interface ITrialSystem {
 
 ```
 游戏启动 → BOOT
-  → DataManager 读取 Assets/Data/*.json（Characters / Aberrations / GameConfig）
+  → DataManager 读取 Assets/Data/*.json
+      • BandMembers.json（乐队少女，独立库：专属装备、固定形象、任务加入）
+      • Characters.json（普通员工：每日招募、可捏人、无专属装备）
+      • Aberrations.json / Quests.json / GameConfig.json
   → 反序列化为 Character[] / Aberration[] / GameConfig，缓存到内存（按 ID 索引）
   → GameManager 进入 MAIN_MENU
 ```
