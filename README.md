@@ -50,6 +50,7 @@
 | [`Aberrations.md`](Aberrations.md) | 异想体图鉴（工作适配乘数、出逃、specialEffects） | `Aberrations.json` |
 | [`Quests.md`](Quests.md) | 任务表（主线/乐队/日常/考验） | `Quests.json` |
 | [`Narrative_Index.md`](Narrative_Index.md) | 剧情索引与模板（分级、锚点、Yarn 模板、合规） | `Dialogues/*.yarn` |
+| [`Equipments.md`](Equipments.md) | 装备图鉴（**均由异想体研发而来**，每异想体一套） | `Equipments.json` |
 
 > **两套角色数据库**（GDD v1.5）：普通员工（每日星石招募、可捏人、无专属装备）与乐队少女（完成任务加入、固定形象、有专属装备）**数据分离**，分别存放。
 
