@@ -277,24 +277,34 @@ public interface ITrialSystem {
 
 ### 4.4 配置（GameConfig.json 结构示意）
 
+> **命名规范（强制）**：所有 JSON 配置键与数据类字段一律用 **camelCase**（首词小写、后续词首字母大写），
+> 例：`quotaBase`、`memoryDays`、`sourceAberrationId`。
+> **禁止 snake_case**（`quota_base`）——Unity `JsonUtility` 要求键名与 C# 字段名**逐字符一致**，
+> 不一致时**不报错、值静默为 0**，是极难排查的坑。
+
 ```jsonc
 {
   "version": 1,
-  "day_loop": {
-    "final_day": 50,
-    "true_ending_deadline_day": 46,
-    "memory_days": [5,10,15,20,25,30,35,40,45],
-    "quota_base": 300,            // TODO(设计待确认): 关联 GDD §3.12
-    "quota_growth_per_10days": 2.0
+  "dayLoop": {
+    "finalDay": 50,
+    "trueEndingDeadlineDay": 46,
+    "memoryDays": [5,10,15,20,25,30,35,40,45],
+    "quotaBase": 300,              // TODO(设计待确认): 关联 GDD §3.12
+    "quotaGrowthPer10Days": 2.0,
+    "trialDayQuotaMultiplier": 1.3 // 考验日上调 30%（已定稿）
   },
-  "aberration_pool": {
-    "candidates_base": 3, "candidates_per_days": 3, "candidates_max": 5
+  "aberrationPool": {
+    "candidatesBase": 3, "candidatesPerDays": 3, "candidatesMax": 5
   },
-  "training": { "cost_by_tier": [10,30,100,300,800,2000], "gain_per_train": 2 },
-  "recruitment": { "cost": 50, "slots_by_facility_level": [2,4,6,8] }
+  "training": {
+    "costByTargetLevel": [10,30,100,300,800]   // I→II / II→III / III→IV / IV→V / V→EX 星石（草案）
+  },
+  "recruitment": { "cost": 50, "slotsByFacilityLevel": [2,4,6,8] },
+  "save": { "directoryName": "ResonanceShelter" }
 }
 ```
 
+> 说明：训练为**按级提升**（GDD §2），故不再有 `gainPerTrain`（旧的"每次 +N 点"已废弃）。
 > 所有占位值须带 `// TODO(设计待确认): 关联 GDD §X.X` 注释（见 agent.md §4.2 / §10）。
 
 ---

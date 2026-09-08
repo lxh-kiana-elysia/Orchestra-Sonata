@@ -159,7 +159,8 @@
 | 规则 | 要求 |
 |---|---|
 | 数据驱动 | 所有数值/配置从 JSON 或 SO 读取，**禁止硬编码数值** |
-| 命名 | 类/方法 PascalCase；私有字段 `_camelCase`；常量 UPPER_SNAKE |
+| 命名（代码） | 类/方法 PascalCase；私有字段 `_camelCase`；常量 UPPER_SNAKE |
+| **命名（数据与配置）** | **JSON 配置键与数据类字段一律 camelCase**（`quotaBase`、`memoryDays`、`sourceAberrationId`）。**严禁 snake_case**——Unity `JsonUtility` 要求键名与字段名逐字符一致，不一致时**不报错、值静默为 0**，属高危坑 |
 | 注释 | public 方法与复杂逻辑写 XML 注释；中文注释 |
 | 单类行数 | ≤ 300 行（**推荐**）；复杂系统（如 GameManager / WorkSystem）可放宽至 500 行，**需在类注释中说明未拆分的理由** |
 | 占位值注释 | 每个占位值必须带 `// TODO(设计待确认): 关联 GDD §X.X` 注释，与 §10 待定项表一一对应 |
