@@ -1,6 +1,6 @@
 # FDD.md — 乐团鸣曲 详细功能设计文档
 
-> 文档版本：v1.3（2026-09-08）
+> 文档版本：v1.4（2026-09-08）
 > 上游依据：`GDD.docx` v1.4 · `ARCHITECTURE.md` v1.0 · `agent.md` v3.1
 > 定位：把 GDD 中的规则**拆解为可实现的技术规格**——状态机、流程图、数据结构、配置项、边界条件。
 >
@@ -473,7 +473,129 @@ class WaypointGraph {
 
 ---
 
-## 11. 测试场景清单（Phase 0-2 需创建）
+---
+
+## FDD-11 装备系统（E.G.O 式，参考脑叶）
+
+### 11.1 设计定位
+装备系统**只影响数值与表现**，不解锁/阻塞任何流程（与"异想体绑定=彩蛋"原则一致）。装备分三类，与脑叶 E.G.O 一一对应：
+
+| 类型 | 脑叶对应 | 作用 | 获取方式 |
+|---|---|---|---|
+| **武器** Weapon | E.G.O 武器 | 镇压出逃异想体时造成伤害；附带工作成功率修正 | 消耗该异想体的**异想体点数**研发 |
+| **护甲** Armor | E.G.O 护甲 | 减免员工受到的伤害（四种伤害类型各有抗性） | 同上（点数要求更高） |
+| **饰品** Accessory | E.G.O 饰品 | 属性加成（HP/SP/演奏/共感等） | 对该异想体**工作完成时随机掉落** |
+
+### 11.2 伤害类型（沿用脑叶四色，便于开发对照）
+| 类型 | 键名 | 效果 | 本作表现（美术自创，不血腥） |
+|---|---|---|---|
+| 红（物理） | `RED` | 减少 HP | 冲击 |
+| 白（精神） | `WHITE` | 减少 SP | 音波/情绪冲击 |
+| 黑（侵蚀） | `BLACK` | 同时减少 HP 与 SP | 复合干扰 |
+| 蓝（灵魂） | `PALE` | 按最大 HP 百分比扣血 | 异质侵蚀（稀有、高危） |
+
+### 11.3 武器属性
+| 字段 | 说明 |
+|---|---|
+| `id` / `name` | 标识与名称 |
+| `type` | `weapon` |
+| `grade` | 装备等级 `ZAYIN/TETH/HE/WAW/ALEPH`（源自异想体等级） |
+| `sourceAberrationId` | 来源异想体（装备与该异想体绑定） |
+| `damageType` | `RED/WHITE/BLACK/PALE` |
+| `damage` | 伤害区间 `[min, max]` |
+| `attackSpeed` | `fast / normal / slow` |
+| `attackRange` | `short / medium / long` |
+| `requirement` | 装备要求：`{ stat, level }`（如演奏水平 ≥ II） |
+| `effects` | 附加效果（如"演奏成功率 +5%"） |
+| `unlockCost` | 研发所需该异想体点数 |
+
+### 11.4 护甲属性
+| 字段 | 说明 |
+|---|---|
+| `resistances` | 四色抗性 `RED/WHITE/BLACK/PALE`，**1.0 = 普通，<1 = 抗性，>1 = 弱点**（如 0.5 强抗、2.0 极弱） |
+| `requirement` | 装备要求（属性等级） |
+| `unlockCost` | 研发所需点数（通常高于武器） |
+| `effects` | 附加效果（如"移动速度 +5%"） |
+
+### 11.5 饰品与槽位
+- **槽位（简化自脑叶 14 槽）**：`head`（头部）/ `face`（面部）/ `neck`（颈部）/ `hand`（手部）/ `back`（背部）/ `charm`（挂饰）—— 共 **6 槽**。
+- 同槽位新饰品**覆盖**旧饰品（脑叶规则）；等级 ≥ IV 的角色可**锁定**饰品不被覆盖（可选功能，Phase 2 后）。
+- 饰品无等级要求，任何角色可获得；提供属性加成。
+
+### 11.6 装备规则
+1. **装备要求**：角色对应属性等级不足时**无法装备**；若装备后属性下降（崩溃导致），次日强制卸下（脑叶规则）。
+2. **武器/护甲**：每名角色同时最多 1 武器 + 1 护甲 + 6 饰品。
+3. **乐队少女**：拥有**专属**武器/护甲/饰品（与其同位体异想体绑定），见 `Band_Members.md`。
+4. **普通员工**：可装备通用装备（无专属绑定），可从任意异想体研发。
+5. **不阻塞流程**：装备缺失不影响任何任务/剧情解锁。
+
+### 11.7 数据结构（Equipments.json）
+```jsonc
+[
+  {
+    "id": "ego_weapon_sun_01",
+    "name": "未熄的拨片",
+    "type": "weapon",
+    "grade": "HE",
+    "sourceAberrationId": "aber_sun_01",
+    "damageType": "RED",
+    "damage": [5, 8],
+    "attackSpeed": "normal",
+    "attackRange": "short",
+    "requirement": { "stat": "performance", "level": 2 },
+    "effects": [ { "type": "workSuccessRate", "workType": "Performance", "value": 0.05 } ],
+    "unlockCost": 40
+  },
+  {
+    "id": "ego_armor_sun_01",
+    "name": "余晖外套",
+    "type": "armor",
+    "grade": "HE",
+    "sourceAberrationId": "aber_sun_01",
+    "resistances": { "RED": 0.8, "WHITE": 0.6, "BLACK": 1.2, "PALE": 1.5 },
+    "requirement": { "stat": "empathy", "level": 2 },
+    "effects": [],
+    "unlockCost": 120
+  },
+  {
+    "id": "ego_gift_sun_01",
+    "name": "星形发夹",
+    "type": "accessory",
+    "slot": "head",
+    "sourceAberrationId": "aber_sun_01",
+    "bonus": { "empathy": 3 },
+    "dropWeight": 30
+  }
+]
+```
+> 说明：`unlockCost` / `damage` / `bonus` / `dropWeight` 均为**占位值**，待 Phase 2 数值表统一（关联 GDD §3.2 异想体点数）。
+
+### 11.8 关键逻辑 🔬
+```csharp
+// 装备要求校验
+bool CanEquip(Character c, Equipment e)
+    => GetStatLevel(c, e.requirement.stat) >= e.requirement.level;
+
+// 实际伤害（护甲抗性）
+float CalcDamage(float raw, Equipment armor, string dmgType)
+    => raw * (armor == null ? 1f : armor.resistances[dmgType]);
+
+// 工作成功率受武器效果影响（叠加进异想体修正之外）
+float ApplyEquipmentBonus(float rate, Character c, WorkType t)
+    => rate + SumEffects(c.weapon, t);
+```
+
+### 11.9 验收点
+- [ ] 武器/护甲/饰品三类均可被正确加载与装备
+- [ ] 属性等级不足时无法装备；属性下降后次日强制卸下
+- [ ] 四色抗性生效（护甲减伤按类型计算）
+- [ ] 饰品按槽位覆盖，同槽位不叠加
+- [ ] 研发消耗对应异想体点数；点数不足不可研发
+- [ ] 装备缺失**不阻塞**任何任务/剧情（彩蛋原则）
+
+---
+
+## 12. 测试场景清单（Phase 0-2 需创建）
 
 > 依据 agent.md §6 测试规范：纯逻辑用单元测试（EditMode），系统流程用最小测试场景。
 
@@ -503,6 +625,7 @@ class WaypointGraph {
 | 日期 | 版本 | 说明 |
 |---|---|---|
 | 2026-09-07 | v1.0 | 初版：8 个模块 FDD（日循环/工作/异想体/员工/考验/存档/剧情/编成节点），含状态机、关键逻辑、验收点；数值配置汇总与 7 项待确认清单。**不含美术风格**（项目美术不基于脑叶） |
+| 2026-09-08 | v1.4 | 新增 FDD-11 装备系统（E.G.O 式，完整参考脑叶）：武器/护甲/饰品三类、四色伤害与抗性、6 槽位饰品、装备要求与强制卸下、Equipments.json 结构、纯函数与验收点；原测试清单顺延为 §12
 | 2026-09-08 | v1.3 | 新增 FDD-10 异想体数据规格：workModifiers 明确为**乘数**（基准1.0，禁负值）；新增 specialEffects 字段（工作结果为优/满产出触发效果）；收录「未奏响的乐章」完整 JSON 规格（aber_score_01，ZAYIN/回忆型/对应千早爱音/产出情感粒子）与验收点
 | 2026-09-07 | v1.2 | 明确与 GDD 的分工（GDD=规则权威，FDD=实现规格，去除重复定义）；FDD-02 判定规则改为引用 GDD；新增 §11 测试场景清单（6 个场景 + 5 组单测）；存档目录名统一 ResonanceShelter（同步 GDD/ARCHITECTURE/agent）
 | 2026-09-07 | v1.1 | 落实 7 项待确认决策（用户拍板）：①未达标**无法结束当天**须达标或重开（GDD §3.11 同步修订）；②考验日配额 **×1.3**；③递减曲线 `1/(1+0.2(n-1))`；④成长系数 成功 `×0.10` / 失败 `×0.03`；⑤乐队少女训练**无约束**；⑥寻路采用**路点 Waypoint**（新增 FDD-09，含决策理由与实现方式）；⑦存档目录名 **ResonanceShelter**。§9 标记已定稿项，§10 保留 4 项待实测调参 |
