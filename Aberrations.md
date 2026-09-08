@@ -51,7 +51,9 @@
 | `mood` / `moodDangerMin` / `moodDangerMax` | float | 情绪值 0-100 与危险窗口 |
 | `linkedCharacterId` | string | 对应角色（乐队少女 id 或 null） |
 | `workModifiers` | list | 各工作类型的**乘数**修正（1.0 基准） |
-| `pointsPerSuccess` | int | 成功时产出的情感粒子基准值 |
+| `energyPerSuccess` | int | 每次成功产出的**情感粒子**（当日能源）基准值；失败约 25% |
+| `pointsPerSuccess` | int | 每次成功产出的**异想体点数**（解锁剧情/研发装备用） |
+| `accumulatedPoints` | float | ☆运行时：已累积的异想体点数（**不写在配置里**） |
 | `storyUnlockThresholds` | int[] | 异想体点数解锁剧情的档位 |
 | `escapeTrigger` / `escapeBehavior` / `suppressMethod` | string | 出逃规则（ZAYIN 为 null） |
 | `specialEffects` | list | 专属效果（trigger/effect/target/value） |
@@ -70,7 +72,7 @@
 | linkedCharacterId | `band_ppp_kasumi`（户山香澄） |
 | 情绪值 | 默认 60；危险窗口 <20 或 >90 |
 | 工作适配（乘数） | 演奏 **1.2** / 谈话 **1.0** / 创作 **0.9** / 比武 **0.7** |
-| 产出 | 每次成功 +8 情感粒子（基准） |
+| 产出 | 情感粒子 `[占位]` / 异想体点数 **+8**（GDD 已定） |
 | storyUnlockThresholds | 0 / 40 / 120 |
 | 出逃条件 | 情绪值跌破 10，或连续 3 天未工作 |
 | 抽取 | `minDay` 7（HE 最早 Day7） / `weight` 100 / 绑定香澄=**彩蛋**（不影响流程） |
@@ -123,7 +125,8 @@
     { "workType": "Talk",        "modifier": 1.0 },
     { "workType": "Combat",      "modifier": 0.5 }
   ],
-  "pointsPerSuccess": 10,
+  "energyPerSuccess": 10,            // 情感粒子（成功基准值）
+  "pointsPerSuccess": 5,             // 异想体点数（草案，待调参）
   "storyUnlockThresholds": [0, 20, 50],
   "escapeTrigger": null,
   "escapeBehavior": null,

@@ -188,19 +188,27 @@ public class Character {
 > 角色的**解锁只看 `unlockCondition`**（完成特定任务 / 异想体点数达档位），与运行时进度无关。
 
 // 异想体
+// 字段分两类：★=静态配置（策划填 JSON）；☆=运行时状态（程序生成/存档）
 [System.Serializable]
 public class Aberration {
+    // ★ 静态配置
     public string id, name, type;
     public RiskLevel riskLevel;
-    public float mood;                   // 0-100
+    public float mood;                   // 初始情绪值 0-100
     public float moodDangerMin, moodDangerMax;
     public string linkedCharacterId;
-    public Dictionary<WorkType,float> workModifiers;  // 工作偏好修正
+    public Dictionary<WorkType,float> workModifiers;  // 工作偏好修正（乘数，1.0 基准）
     public string escapeTrigger, escapeBehavior, suppressMethod;
-    public int pointsPerSuccess;
-    public int[] storyUnlockThresholds;
+    public int energyPerSuccess;         // 每次成功产出的【情感粒子】基准值（失败约 25%）
+    public int pointsPerSuccess;         // 每次成功产出的【异想体点数】
+    public int[] storyUnlockThresholds;  // 异想体点数解锁剧情的档位
     public string background;
-    public float points;                 // 已累积异想体点数
+    public int minDay = 1;               // 最早出现天数（默认 1，5 种难度全程可出现）
+    public int weight = 100;             // 池内权重（0 = 不进池）
+
+    // ☆ 运行时状态（存入存档）
+    public float accumulatedPoints;      // 该异想体已累积的异想体点数（解锁剧情 / 研发装备用）
+}
 }
 
 // 工作结果
