@@ -67,7 +67,7 @@
 |---|---|
 | type | 创伤型 |
 | riskLevel | **3（HE）** — 派遣门槛：判定属性 ≥ III 级/41 |
-| linkedCharacterId | `band_pp_kasumi`（户山香澄） |
+| linkedCharacterId | `band_ppp_kasumi`（户山香澄） |
 | 情绪值 | 默认 60；危险窗口 <20 或 >90 |
 | 工作适配（乘数） | 演奏 **1.2** / 谈话 **1.0** / 创作 **0.9** / 比武 **0.7** |
 | 产出 | 每次成功 +8 情感粒子（基准） |

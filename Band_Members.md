@@ -18,7 +18,13 @@
 
 | 字段 | 类型 | 说明 |
 |---|---|---|
-| `id` | string | 唯一标识（建议 `band_<乐队缩写>_<角色>`，如 `band_pp_kasumi`） |
+| `id` | string | 唯一标识（建议 `band_<乐队缩写>_<角色>`，如 `band_ppp_kasumi`） |
+
+> **乐队缩写对照（务必使用，勿自创）**：
+> - **PPP** = Poppin'Party（官方简称，**不是 PP**）
+> - 其余乐队待定，确定后在本表补充（如 MyGO!!!!! 暂用 `mygo`）
+
+---
 | `name` | string | 显示名称 |
 | `band` | string | 所属乐队（如 Poppin'Party） |
 | `hp/sp/performance/empathy` | int | 四维，默认 10（GDD §2） |
@@ -37,7 +43,7 @@
 
 | 项 | 值 |
 |---|---|
-| id | `band_pp_kasumi` |
+| id | `band_ppp_kasumi` |
 | name | 户山香澄 |
 | band | Poppin'Party |
 | 四维 | HP 10 / SP 10 / 演奏水平 10 / 共感 10（默认） |

@@ -63,7 +63,7 @@ Assets/Data/Dialogues/
 ### 4.1 日常反馈（短，一行）
 ```yaml
 id: fb_kasumi_work_success_01
-character: band_pp_kasumi
+character: band_ppp_kasumi
 trigger: workSuccess
 text: "嘿嘿，感觉还不错！"
 ```
@@ -78,13 +78,13 @@ trigger:
   aberrationId: aber_sun_01
   count: 1
 scene: department_control
-participants: [band_pp_kasumi]
+participants: [band_ppp_kasumi]
 dialogue:
-  - speaker: band_pp_kasumi
+  - speaker: band_ppp_kasumi
     text: "它……好像在等一首歌。"
   - speaker: null          # null = 旁白
     text: "[熄灭的太阳] 微微颤动，光斑在它的表面缓慢亮起。"
-  - speaker: band_pp_kasumi
+  - speaker: band_ppp_kasumi
     text: "那——这首，是我还没唱完的那首。"
 effects:
   - type: mood
