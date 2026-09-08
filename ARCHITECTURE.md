@@ -161,22 +161,31 @@ public enum WorkType { Performance, Talk, Creation, Combat }   // 演奏/谈话/
 public enum RiskLevel { ZAYIN, TETH, HE, WAW, ALEPH }
 
 // 角色（普通员工 + 乐队少女共用）
+// 字段分两类：★=静态配置（策划填 JSON）；☆=运行时状态（程序生成/存档，不写在配置里）
 [System.Serializable]
 public class Character {
+    // ★ 静态配置
     public string id;
     public string name;
     public EmployeeType employeeType;
     public string band;                  // 普通员工为空
     public Dictionary<string,string> appearance;  // 普通员工可捏人；乐队少女 null
-    public int hp, sp;                   // 当前值（默认 10）
-    public int hpMax, spMax;
-    public int performance, empathy;     // 演奏水平 / 共感（默认 10）
     public string skill;
     public float recoveryRate = 5.0f;    // 每单位时间恢复速度（占位）
+
+    // ☆ 运行时状态（初始化时取配置初始值，之后随游戏变化并存入存档）
+    public int hp, sp;                   // 当前值（初始 10）
+    public int hpMax, spMax;
+    public int performance, empathy;     // 演奏水平 / 共感（初始 10）
     public int todayWorkCount;           // 当日派遣次数（用于收益递减）
     public List<string> unlockedStoryNodes;
     public float personalLineProgress;
+    public bool isCollapsed;             // 崩溃/死亡状态
 }
+
+> **配置与运行时分离原则**：`BandMembers.json` / `Characters.json` 只存 ★ 静态配置与四维**初始值**；
+> 运行时状态（当前四维、剧情进度、个人线、崩溃状态、装备槽位）由程序在运行时生成并写入存档（见 FDD-06）。
+> 角色的**解锁只看 `unlockCondition`**（完成特定任务 / 异想体点数达档位），与运行时进度无关。
 
 // 异想体
 [System.Serializable]

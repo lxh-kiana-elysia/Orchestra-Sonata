@@ -35,7 +35,16 @@
 | `unlockCondition` | string | **加入条件**：完成某任务 / 异想体点数达档位 |
 | `equipment` | dict | **专属装备**：`weapon` / `armor` / `accessory`（各含 id、名称、加成） |
 | `linkedAberrationId` | string | 绑定的同位体异想体（见 Aberrations.md） |
-| `personalLineProgress` | float | 个人线进度 0-100（运行时） |
+
+> **静态配置 vs 运行时状态（重要）**：
+> 上表是**策划填写的静态配置**（写入 `BandMembers.json` 的模板数据）。
+> 以下属于**运行时状态**，**不在本表填写**，由程序在运行中生成并存入存档：
+> - `personalLineProgress`（个人线进度 0-100）
+> - `unlockedStoryNodes`（已解锁剧情节点）
+> - 当前四维数值（hp/sp/performance/empathy 的运行时实际值，配置中只给**初始值**）
+> - 崩溃/死亡状态、装备实际槽位、今日工作次数等
+>
+> 因此**角色的解锁只看 `unlockCondition`**（完成特定任务 / 异想体点数达档位），与个人线进度无关。
 
 ---
 
