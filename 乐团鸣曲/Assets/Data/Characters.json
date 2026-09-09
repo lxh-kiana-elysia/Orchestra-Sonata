@@ -1,0 +1,13 @@
+{
+  "characters": [
+    {
+      "id": "staff_sample_01",
+      "name": "新手员工",
+      "hp": 10, "sp": 10, "performance": 10, "empathy": 10,
+      "hairStyle": "short_01", "hairColor": "brown",
+      "eyeStyle": "normal_01", "expression": "calm_01",
+      "recoveryRate": 5.0,
+      "_note": "占位：普通员工为每日招录随机生成，本条仅用于验证数据读取"
+    }
+  ]
+}

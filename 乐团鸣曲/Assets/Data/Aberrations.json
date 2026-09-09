@@ -1,0 +1,61 @@
+{"aberrations":[
+{
+	"id":"aber_sun_01",
+	"name":"熄灭的太阳",
+	"type":"创伤型",
+	"riskLevel":3,
+	"mood":60,
+	"moodDangerMin":20,
+	"moodDangerMax":90,
+	"linkedCharacterId":"band_ppp_kasumi",
+	"workModifiers": 
+	[
+  		{ "workType": "Performance", "modifier": 1.2 },
+ 		{ "workType": "Talk",        "modifier": 1.0 },
+ 	 	{ "workType": "Creation",    "modifier": 0.9 },
+  		{ "workType": "Combat",      "modifier": 0.7 }
+	],
+	"energyPerSuccess":30,
+	"_note": "占位：待 Phase 2 实测调参",
+	"pointsPerSuccess":8,
+	"storyUnlockThresholds":[0,40,120],
+	"escapeTrigger":"情绪值跌破 10，或连续 3 天未工作",
+	"escapeBehavior":"全局工作成功率 -10%；形态黯淡的日轮周期点名成员，精神额外 -5",
+	"suppressMethod":"执行“演奏”累计成功 2 次，或共感 ≥ III 的成员“谈话”成功 1 次",
+	"background":"同位体香澄在“没能让某场演出发光”的遗憾中凝固出的存在——它记得所有观众离场后的寂静",
+	"specialEffects":[],
+	"minDay":1,
+	"weight":100
+},
+{
+	"id":"aber_score_01",
+	"name":"未奏响的乐章",
+	"type":"回忆型",
+	"riskLevel":1,
+	"mood":50,
+	"moodDangerMin":0,
+	"moodDangerMax":100,
+	"linkedCharacterId":"band_mygo_anon",
+	"workModifiers": 
+	[
+  		{ "workType": "Performance", "modifier": 1.3 },
+ 		{ "workType": "Talk",        "modifier": 1.0 },
+ 	 	{ "workType": "Creation",    "modifier": 1.1 },
+  		{ "workType": "Combat",      "modifier": 0.5 }
+	],
+	"energyPerSuccess":10,
+	"pointsPerSuccess":5,
+	"storyUnlockThresholds":[0,20,50],
+	"escapeTrigger":null,
+	"escapeBehavior":null,
+	"suppressMethod":null,
+	"background":"一段从未被奏响的旋律，凝固成了等待知音的空谱。它没有过去，只在等待一个能赋予它意义的人。",
+	"specialEffects":
+	[
+		{ "trigger": "workResultExcellent", "effect": "restoreSp", "target": "worker", "value": 8 },
+    		{ "trigger": "fullOutput", "effect": "restoreSp", "target": "department", "value": 5 }
+	],
+	"minDay":1,
+	"weight":0
+}
+]}
