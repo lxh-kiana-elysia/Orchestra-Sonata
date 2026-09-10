@@ -92,6 +92,7 @@ BOOT → MAIN_MENU(L0) → LOADING → DEPLOY(L1 编成)
 | `DataManager` | 系统 | 加载/缓存 JSON 与 SO，提供按 ID 查询 |
 | `EventManager` | 系统 | 发布/订阅，跨系统解耦 |
 | `UIManager` | 系统 | 屏幕（Screen）栈管理、面板开关 |
+| `CameraController` | 系统 | 部门场景正交相机：平移（WASD/中键拖动）、滚轮缩放（0.5x~2.0x）、边界钳制、平滑插值（FDD-12） |
 | `WorkSystem` | 系统 | 工作判定、进度、产出结算、成长计算、收益递减 |
 | `TrialSystem` | 系统 | 乐队考验开启/完成判定（与乐队解锁解耦） |
 | `SaveSystem` | 系统 | 存档读写、记忆日快照与回滚 |

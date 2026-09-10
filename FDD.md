@@ -1,6 +1,6 @@
 # FDD.md — 乐团鸣曲 详细功能设计文档
 
-> 文档版本：v2.1（2026-09-10）
+> 文档版本：v2.2（2026-09-10）
 > 上游依据：`GDD.docx` v1.4 · `ARCHITECTURE.md` v1.0 · `agent.md` v3.1
 > 定位：把 GDD 中的规则**拆解为可实现的技术规格**——状态机、流程图、数据结构、配置项、边界条件。
 >
@@ -649,6 +649,65 @@ float ApplyEquipmentBonus(float rate, Character c, WorkType t)
 
 ---
 
+---
+
+## FDD-12 相机控制系统（v2.2 新增，参考脑叶）
+
+### 12.1 职责
+管理部门场景（L3）的**正交相机**：平移输入、滚轮缩放、边界钳制、平滑移动。
+不参与玩法计算，只负责"玩家看哪里、看多广"。
+
+### 12.2 相机规格（草案，待调参）
+| 项 | 值 | 说明 |
+|---|---|---|
+| 相机类型 | **正交相机**（Orthographic） | URP 2D 项目；不使用透视 |
+| 默认 orthographicSize | 6（`[占位]`） | 对应视野高度 12 单位 |
+| 缩放范围 | `0.5x ~ 2.0x` | 通过修改 orthographicSize 实现 |
+| 默认缩放 | `1.0x` | 视野约 21 x 12 单位（16:9） |
+| 部门场景尺寸 | 约 `40 x 12` 单位（`[占位]`） | 横向布局：主房间 + 收容单元 + 走廊 |
+| 默认视野占比 | 约可见部门的 **1/2 宽度** | 与脑叶一致：默认看不到整个部门 |
+
+### 12.3 输入映射
+| 输入 | 行为 |
+|---|---|
+| `WASD` / 方向键 | 平移（速度 `panSpeed`，`[占位]`） |
+| 鼠标中键拖动 | 平移（拖拽增量反向映射） |
+| 滚轮 | 缩放（步进 `zoomStep`，`[占位]`；带插值平滑） |
+| 中键单击 / `Home` | 重置到默认位置与缩放 |
+
+> 使用 **Input System**（工程已启用），在 Input Actions 中定义 `Camera/Pan`、`Camera/Zoom`、`Camera/Reset`。
+
+### 12.4 关键逻辑 🔬
+```csharp
+// 缩放：修改正交尺寸并钳制
+void SetZoom(float factor) {                       // factor: 0.5 ~ 2.0
+    float size = defaultSize / Mathf.Clamp(factor, minZoom, maxZoom);
+    cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, size, zoomLerp);
+}
+
+// 平移 + 边界钳制
+void MoveCamera(Vector2 delta) {
+    Vector3 pos = transform.position + (Vector3)delta * panSpeed * Time.deltaTime;
+    pos.x = Mathf.Clamp(pos.x, bounds.min.x + halfW, bounds.max.x - halfW);
+    pos.y = Mathf.Clamp(pos.y, bounds.min.y + halfH, bounds.max.y - halfH);
+    transform.position = pos;
+}
+```
+- 相机移动与缩放均做**插值平滑**（避免突兀跳转）。
+- 边界 `bounds` 由部门场景的碰撞盒/配置给出，随部门切换更新。
+- **性能**：相机更新放 `LateUpdate`（在所有目标移动之后），避免画面抖动。
+
+### 12.5 验收点
+- [ ] WASD / 方向键可上下左右平移视角
+- [ ] 鼠标中键拖动可平移（不与右键下令冲突）
+- [ ] 滚轮可缩放，且在 `0.5x~2.0x` 之间钳制
+- [ ] 相机不会移出部门场景边界（无空白露馅）
+- [ ] 缩放/平移平滑，无抖动或跳变
+- [ ] 出逃事件发生时，玩家可通过移动视角找到出逃体（或警报点击定位）
+- [ ] 与工作/下令操作**不冲突**（右键仍为命令键）
+
+---
+
 ## 12. 测试场景清单（Phase 0-2 需创建）
 
 > 依据 agent.md §6 测试规范：纯逻辑用单元测试（EditMode），系统流程用最小测试场景。
@@ -659,6 +718,7 @@ float ApplyEquipmentBonus(float rate, Character c, WorkType t)
 | `Test_DayLoop.unity` | FDD-01 | 日循环状态迁移（START→RUNNING→SETTLE→次日）；配额随天数递增；未达标无法结束；考验日 ×1.3 | Phase 1-2 |
 | `Test_SaveSystem.unity` | FDD-06 | 存档写入/读取；记忆日（Day 5/10/…）自动锚定；回滚后"保留/移除"规则正确 | Phase 1 |
 | `Test_AberrationMood.unity` | FDD-03 | 情绪值归零→出逃；情绪值爆满→突破事件（正向）；镇压成功回归+奖励点数；候选池抽取与回池 | Phase 2 |
+| `Test_CameraSystem.unity` | FDD-12 | 平移（WASD/中键拖动）与滚轮缩放；边界钳制不露空白；缩放档位 0.5x~2.0x；与右键下令不冲突 | Phase 2 |
 | `Test_RecruitTrain.unity` | FDD-04 | 招录扣星石与槽位上限；捏人参数写入；训练按档计费与加点不超上限 | Phase 1 |
 | `Test_TrialSystem.unity` | FDD-05 | 考验解锁不阻塞乐队解锁；失败可重试；Day46 真结局判定与 Day50 结局分支 | Phase 2 |
 
@@ -679,6 +739,7 @@ float ApplyEquipmentBonus(float rate, Character c, WorkType t)
 | 日期 | 版本 | 说明 |
 |---|---|---|
 | 2026-09-07 | v1.0 | 初版：8 个模块 FDD（日循环/工作/异想体/员工/考验/存档/剧情/编成节点），含状态机、关键逻辑、验收点；数值配置汇总与 7 项待确认清单。**不含美术风格**（项目美术不基于脑叶） |
+| 2026-09-10 | v2.2 | 新增 FDD-12 相机控制系统（参考脑叶）：正交相机、平移（WASD/中键拖动）、滚轮缩放（0.5x~2.0x 钳制）、边界限制、平滑插值、部门场景尺寸草案（40x12 单位，默认视野约 1/2）、7 条验收点
 | 2026-09-10 | v2.1 | FDD-01 状态机修正：删除残留的「未达标强制结束（forced=true）」分支（与 GDD §3.11「未达标无法结束当天」冲突）；补「重新开始这一天」与「回到记忆库」两条回滚路径的区别（内存态 vs 快照）
 | 2026-09-08 | v2.0 | **全文档自检修复**：①装备验收点残留旧规则「属性下降后次日强制卸下」→改为「仅装备前检查、装备后不卸下」；②JSON 示例的 linkedCharacterId 旧 id `anon_chihaya` → `band_mygo_anon`
 | 2026-09-08 | v1.9 | **修复命名 bug**：`pointsPerSuccess` 原被误标为"情感粒子产出"，与其中文字面义（异想体点数）冲突。现拆分并正名：`energyPerSuccess`=情感粒子产出、`pointsPerSuccess`=异想体点数产出（回归本义）、`accumulatedPoints`=运行时累积点数（原 `points`）。同步 ARCHITECTURE（Aberration 字段加 ★/☆ 注释）、Aberrations.md（字段速查+JSON）、GDD §3.2（两种产出的中文说明）
