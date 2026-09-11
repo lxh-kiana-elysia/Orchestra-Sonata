@@ -3,115 +3,115 @@ using System.Collections.Generic;
 namespace YuetanMingqu
 {
     /// <summary>
-    /// ÒìÏëÌåÊý¾ÝÀà£¨´¿Êý¾Ý£¬²»º¬Âß¼­£©¡£
-    /// Êý¾ÝÀ´Ô´£ºAssets/Data/Aberrations.json
-    /// ×Ö¶Î¹æ¸ñ£ºAberrations.md¡¸×Ö¶ÎËÙ²é¡¹/ FDD ¡ì10£»¹æÔò¼û GDD ¡ì3.2 / ¡ì3.9
-    /// ËµÃ÷£º±¾ÀàÖ»´æ¡ï¾²Ì¬ÅäÖÃ£¬³ÌÐòÖ»¶Á²»¸Ä£»ÔËÐÐÊ±×´Ì¬£¨ÈçÒÑÀÛ»ýµãÊý£©ÓÉ³ÌÐòÉú³É²¢Èë´æµµ¡£
-    /// ×¢£ºJSON ÖÐµÄ _note ×Ö¶ÎÊÇ¸ø²ß»®¿´µÄ±¸×¢£¬±¾Àà²»ÉùÃ÷£¬JsonUtility »á×Ô¶¯ºöÂÔ¡£
+    /// å¼‚æƒ³ä½“æ•°æ®ç±»ï¼ˆçº¯æ•°æ®ï¼Œä¸å«é€»è¾‘ï¼‰ã€‚
+    /// æ•°æ®æ¥æºï¼šAssets/Data/Aberrations.json
+    /// å­—æ®µè§„æ ¼ï¼šAberrations.mdã€Œå­—æ®µé€ŸæŸ¥ã€/ FDD Â§10ï¼›è§„åˆ™è§ GDD Â§3.2 / Â§3.9
+    /// è¯´æ˜Žï¼šæœ¬ç±»åªå­˜â˜…é™æ€é…ç½®ï¼Œç¨‹åºåªè¯»ä¸æ”¹ï¼›è¿è¡Œæ—¶çŠ¶æ€ï¼ˆå¦‚å·²ç´¯ç§¯ç‚¹æ•°ï¼‰ç”±ç¨‹åºç”Ÿæˆå¹¶å…¥å­˜æ¡£ã€‚
+    /// æ³¨ï¼šJSON ä¸­çš„ _note å­—æ®µæ˜¯ç»™ç­–åˆ’çœ‹çš„å¤‡æ³¨ï¼Œæœ¬ç±»ä¸å£°æ˜Žï¼ŒJsonUtility ä¼šè‡ªåŠ¨å¿½ç•¥ã€‚
     /// </summary>
-    [System.Serializable]   // ±ê¼Ç¿ÉÐòÁÐ»¯£ºJsonUtility ²ÅÄÜ¶ÁÈ¡/Ð´Èë¸ÃÀà
+    [System.Serializable]   // æ ‡è®°å¯åºåˆ—åŒ–ï¼šJsonUtility æ‰èƒ½è¯»å–/å†™å…¥è¯¥ç±»
     public class Aberration
     {
-        /// <summary>Î¨Ò»±êÊ¶£¬¸ñÊ½ aber_xxx_NN£¨Èç aber_sun_01£©</summary>
+        /// <summary>å”¯ä¸€æ ‡è¯†ï¼Œæ ¼å¼ aber_xxx_NNï¼ˆå¦‚ aber_sun_01ï¼‰</summary>
         public string id;
 
-        /// <summary>ÏÔÊ¾Ãû³Æ£¨Èç¡¸Ï¨ÃðµÄÌ«Ñô¡¹£©</summary>
+        /// <summary>æ˜¾ç¤ºåç§°ï¼ˆå¦‚ã€Œç†„ç­çš„å¤ªé˜³ã€ï¼‰</summary>
         public string name;
 
-        /// <summary>ÀàÐÍ£º´´ÉËÐÍ / »ØÒäÐÍ / ÓûÍûÐÍ / ¹¤¾ßÐÍ</summary>
+        /// <summary>ç±»åž‹ï¼šåˆ›ä¼¤åž‹ / å›žå¿†åž‹ / æ¬²æœ›åž‹ / å·¥å…·åž‹</summary>
         public string type;
 
-        /// <summary>Î£ÏÕµÈ¼¶ 1-5£º1=ZAYIN¡¢2=TETH¡¢3=HE¡¢4=WAW¡¢5=ALEPH£»¾ö¶¨ÅÉÇ²ÃÅ¼÷Óë²ú³öÏµÊý</summary>
+        /// <summary>å±é™©ç­‰çº§ 1-5ï¼š1=ZAYINã€2=TETHã€3=HEã€4=WAWã€5=ALEPHï¼›å†³å®šæ´¾é£é—¨æ§›ä¸Žäº§å‡ºç³»æ•°</summary>
         public int riskLevel;
 
-        /// <summary>ÇéÐ÷Öµ 0-100 µÄ³õÊ¼Öµ£¨¡îÔËÐÐÊ±»á±ä»¯£º¹éÁã³öÌÓ¡¢±¬Âú´¥·¢Í»ÆÆÊÂ¼þ£©</summary>
+        /// <summary>æƒ…ç»ªå€¼ 0-100 çš„åˆå§‹å€¼ï¼ˆâ˜†è¿è¡Œæ—¶ä¼šå˜åŒ–ï¼šå½’é›¶å‡ºé€ƒã€çˆ†æ»¡è§¦å‘çªç ´äº‹ä»¶ï¼‰</summary>
         public float mood;
 
-        /// <summary>ÇéÐ÷Î£ÏÕ´°¿ÚÏÂÏÞ£ºµÍÓÚ´ËÖµ½øÈëÎ£ÏÕ×´Ì¬£¨ZAYIN ¼¶Ìî 0 ±íÊ¾ÎÞ´°¿Ú£©</summary>
+        /// <summary>æƒ…ç»ªå±é™©çª—å£ä¸‹é™ï¼šä½ŽäºŽæ­¤å€¼è¿›å…¥å±é™©çŠ¶æ€ï¼ˆZAYIN çº§å¡« 0 è¡¨ç¤ºæ— çª—å£ï¼‰</summary>
         public float moodDangerMin;
 
-        /// <summary>ÇéÐ÷Î£ÏÕ´°¿ÚÉÏÏÞ£º¸ßÓÚ´ËÖµ½øÈëÎ£ÏÕ×´Ì¬£¨ZAYIN ¼¶Ìî 100 ±íÊ¾ÎÞ´°¿Ú£©</summary>
+        /// <summary>æƒ…ç»ªå±é™©çª—å£ä¸Šé™ï¼šé«˜äºŽæ­¤å€¼è¿›å…¥å±é™©çŠ¶æ€ï¼ˆZAYIN çº§å¡« 100 è¡¨ç¤ºæ— çª—å£ï¼‰</summary>
         public float moodDangerMax;
 
-        /// <summary>°ó¶¨µÄÍ¬Î»Ìå½ÇÉ« id£¨ÀÖ¶ÓÉÙÅ®£©¡£½öÎªÐðÊÂ²Êµ°£º²»Ó°ÏìÊýÖµ¡¢²»×èÈûÁ÷³Ì</summary>
+        /// <summary>ç»‘å®šçš„åŒä½ä½“è§’è‰² idï¼ˆä¹é˜Ÿå°‘å¥³ï¼‰ã€‚ä»…ä¸ºå™äº‹å½©è›‹ï¼šä¸å½±å“æ•°å€¼ã€ä¸é˜»å¡žæµç¨‹</summary>
         public string linkedCharacterId;
 
-        /// <summary>ËÄÖÖ¹¤×÷µÄ³É¹¦ÂÊÐÞÕý£¬³ËÊý¡¢»ù×¼ 1.0¡¢½ûÖ¹¸ºÖµ£¨Èç 1.2 = ÌáÉý 20%£©</summary>
+        /// <summary>å››ç§å·¥ä½œçš„æˆåŠŸçŽ‡ä¿®æ­£ï¼Œä¹˜æ•°ã€åŸºå‡† 1.0ã€ç¦æ­¢è´Ÿå€¼ï¼ˆå¦‚ 1.2 = æå‡ 20%ï¼‰</summary>
         public List<WorkModifier> workModifiers;
 
-        /// <summary>Ã¿´Î³É¹¦¹¤×÷²ú³öµÄ¡¾Çé¸ÐÁ£×Ó¡¿£¨µ±ÈÕÄÜÔ´£©»ù×¼Öµ£»Ê§°ÜÔ¼Îª 25%</summary>
+        /// <summary>æ¯æ¬¡æˆåŠŸå·¥ä½œäº§å‡ºçš„ã€æƒ…æ„Ÿç²’å­ã€‘ï¼ˆå½“æ—¥èƒ½æºï¼‰åŸºå‡†å€¼ï¼›å¤±è´¥çº¦ä¸º 25%</summary>
         public int energyPerSuccess;
 
-        /// <summary>Ã¿´Î³É¹¦¹¤×÷²ú³öµÄ¡¾ÒìÏëÌåµãÊý¡¿£¬ÓÃÓÚ½âËø¾çÇé½ÚµãÓëÑÐ·¢×°±¸</summary>
+        /// <summary>æ¯æ¬¡æˆåŠŸå·¥ä½œäº§å‡ºçš„ã€å¼‚æƒ³ä½“ç‚¹æ•°ã€‘ï¼Œç”¨äºŽè§£é”å‰§æƒ…èŠ‚ç‚¹ä¸Žç ”å‘è£…å¤‡</summary>
         public int pointsPerSuccess;
 
-        /// <summary>ÒìÏëÌåµãÊý½âËø¾çÇéµÄµµÎ»£¨Èç 0/40/120£©</summary>
+        /// <summary>å¼‚æƒ³ä½“ç‚¹æ•°è§£é”å‰§æƒ…çš„æ¡£ä½ï¼ˆå¦‚ 0/40/120ï¼‰</summary>
         public List<int> storyUnlockThresholds;
 
-        /// <summary>³öÌÓ´¥·¢Ìõ¼þ£¨Èç¡¸ÇéÐ÷ÖµµøÆÆ 10£¬»òÁ¬Ðø 3 ÌìÎ´¹¤×÷¡¹£©£»ZAYIN ¼¶Îª null</summary>
+        /// <summary>å‡ºé€ƒè§¦å‘æ¡ä»¶ï¼ˆå¦‚ã€Œæƒ…ç»ªå€¼è·Œç ´ 10ï¼Œæˆ–è¿žç»­ 3 å¤©æœªå·¥ä½œã€ï¼‰ï¼›ZAYIN çº§ä¸º null</summary>
         public string escapeTrigger;
 
-        /// <summary>³öÌÓºóµÄÐÐÎªÓë¶ÔÉèÊ©µÄÓ°Ïì£¨ÈçÈ«¾Ö³É¹¦ÂÊ -10%£©£»ZAYIN ¼¶Îª null</summary>
+        /// <summary>å‡ºé€ƒåŽçš„è¡Œä¸ºä¸Žå¯¹è®¾æ–½çš„å½±å“ï¼ˆå¦‚å…¨å±€æˆåŠŸçŽ‡ -10%ï¼‰ï¼›ZAYIN çº§ä¸º null</summary>
         public string escapeBehavior;
 
-        /// <summary>ÕòÑ¹/°²¸§·½Ê½£¨Í¨³£¶ÔÓ¦¡¸±ÈÎä¡¹¹¤×÷£©£»ZAYIN ¼¶Îª null</summary>
+        /// <summary>é•‡åŽ‹/å®‰æŠšæ–¹å¼ï¼ˆé€šå¸¸å¯¹åº”ã€Œæ¯”æ­¦ã€å·¥ä½œï¼‰ï¼›ZAYIN çº§ä¸º null</summary>
         public string suppressMethod;
 
-        /// <summary>±³¾°¹ÊÊÂÎÄ±¾£¬ÓÃÓÚÍ¼¼øÕ¹Ê¾</summary>
+        /// <summary>èƒŒæ™¯æ•…äº‹æ–‡æœ¬ï¼Œç”¨äºŽå›¾é‰´å±•ç¤º</summary>
         public string background;
 
-        /// <summary>×¨ÊôÐ§¹û±í£¨Èç¹¤×÷½á¹ûÎª¡¸ÓÅ¡¹Ê±»Ö¸´¾«Éñ£©£¬ÓÉ WorkSystem ½áËãºó¶ÁÈ¡Ö´ÐÐ</summary>
+        /// <summary>ä¸“å±žæ•ˆæžœè¡¨ï¼ˆå¦‚å·¥ä½œç»“æžœä¸ºã€Œä¼˜ã€æ—¶æ¢å¤ç²¾ç¥žï¼‰ï¼Œç”± WorkSystem ç»“ç®—åŽè¯»å–æ‰§è¡Œ</summary>
         public List<SpecialEffect> specialEffects;
 
-        /// <summary>×îÔç³öÏÖÌìÊý£º³éÈ¡Ê±ÏÈ°´ minDay ¡Ü µ±Ç°ÌìÊý ¹ýÂË£¬Ä¬ÈÏ 1</summary>
+        /// <summary>æœ€æ—©å‡ºçŽ°å¤©æ•°ï¼šæŠ½å–æ—¶å…ˆæŒ‰ minDay â‰¤ å½“å‰å¤©æ•° è¿‡æ»¤ï¼Œé»˜è®¤ 1</summary>
         public int minDay;
 
-        /// <summary>³ØÄÚ³éÈ¡È¨ÖØ£»0 = ²»½ø³Ø£¨½ö¹Ì¶¨/¾çÇé³öÏÖ£¬Èç Day1 ½ÌÑ§ÒìÏëÌå£©£¬Ä¬ÈÏ 100</summary>
+        /// <summary>æ± å†…æŠ½å–æƒé‡ï¼›0 = ä¸è¿›æ± ï¼ˆä»…å›ºå®š/å‰§æƒ…å‡ºçŽ°ï¼Œå¦‚ Day1 æ•™å­¦å¼‚æƒ³ä½“ï¼‰ï¼Œé»˜è®¤ 100</summary>
         public int weight;
     }
 
     /// <summary>
-    /// ÒìÏëÌåÊý¾Ý¿â£¨¿ÇÀà£©¡£
-    /// ×÷ÓÃ£ºJsonUtility ²»Ö§³Ö½âÎö¶¥²ãÊý×é£¬¹ÊÓÃ±¾Àà°ü×¡ aberrations ÁÐ±í£¬
-    /// Óë Aberrations.json ×îÍâ²ãµÄ {"aberrations":[...]} Ò»Ò»¶ÔÓ¦¡£
+    /// å¼‚æƒ³ä½“æ•°æ®åº“ï¼ˆå£³ç±»ï¼‰ã€‚
+    /// ä½œç”¨ï¼šJsonUtility ä¸æ”¯æŒè§£æžé¡¶å±‚æ•°ç»„ï¼Œæ•…ç”¨æœ¬ç±»åŒ…ä½ aberrations åˆ—è¡¨ï¼Œ
+    /// ä¸Ž Aberrations.json æœ€å¤–å±‚çš„ {"aberrations":[...]} ä¸€ä¸€å¯¹åº”ã€‚
     /// </summary>
     [System.Serializable]
     public class AberrationDatabase
     {
-        /// <summary>ÒìÏëÌåÁÐ±í£¬¼üÃû±ØÐëÓë JSON µÄ aberrations Ò»ÖÂ</summary>
+        /// <summary>å¼‚æƒ³ä½“åˆ—è¡¨ï¼Œé”®åå¿…é¡»ä¸Ž JSON çš„ aberrations ä¸€è‡´</summary>
         public List<Aberration> aberrations;
     }
 
     /// <summary>
-    /// µ¥Ìõ¹¤×÷ÐÞÕý£¬¶ÔÓ¦ JSON ÖÐ workModifiers Êý×éµÄÒ»¸öÔªËØ¡£
+    /// å•æ¡å·¥ä½œä¿®æ­£ï¼Œå¯¹åº” JSON ä¸­ workModifiers æ•°ç»„çš„ä¸€ä¸ªå…ƒç´ ã€‚
     /// </summary>
     [System.Serializable]
     public class WorkModifier
     {
-        /// <summary>¹¤×÷ÀàÐÍ£ºPerformance ÑÝ×à / Talk Ì¸»° / Creation ´´×÷ / Combat ±ÈÎä</summary>
+        /// <summary>å·¥ä½œç±»åž‹ï¼šPerformance æ¼”å¥ / Talk è°ˆè¯ / Creation åˆ›ä½œ / Combat æ¯”æ­¦</summary>
         public string workType;
 
-        /// <summary>³ËÊýÐÞÕý£¬»ù×¼ 1.0£¨&gt;1 ÌáÉý¡¢&lt;1 ½µµÍ£©£¬½ûÖ¹¸ºÖµ</summary>
+        /// <summary>ä¹˜æ•°ä¿®æ­£ï¼ŒåŸºå‡† 1.0ï¼ˆ&gt;1 æå‡ã€&lt;1 é™ä½Žï¼‰ï¼Œç¦æ­¢è´Ÿå€¼</summary>
         public float modifier;
     }
 
     /// <summary>
-    /// ÒìÏëÌå×¨ÊôÐ§¹û£¬¶ÔÓ¦ JSON ÖÐ specialEffects Êý×éµÄÒ»¸öÔªËØ¡£
-    /// ÓÉ WorkSystem ÔÚ¹¤×÷½áËãºó¶ÁÈ¡²¢Ö´ÐÐ¡£
+    /// å¼‚æƒ³ä½“ä¸“å±žæ•ˆæžœï¼Œå¯¹åº” JSON ä¸­ specialEffects æ•°ç»„çš„ä¸€ä¸ªå…ƒç´ ã€‚
+    /// ç”± WorkSystem åœ¨å·¥ä½œç»“ç®—åŽè¯»å–å¹¶æ‰§è¡Œã€‚
     /// </summary>
     [System.Serializable]
     public class SpecialEffect
     {
-        /// <summary>´¥·¢Ê±»ú£ºworkResultExcellent£¨½á¹ûÎªÓÅ£©/ fullOutput£¨±¾´ÎÂú²ú³ö£©</summary>
+        /// <summary>è§¦å‘æ—¶æœºï¼šworkResultExcellentï¼ˆç»“æžœä¸ºä¼˜ï¼‰/ fullOutputï¼ˆæœ¬æ¬¡æ»¡äº§å‡ºï¼‰</summary>
         public string trigger;
 
-        /// <summary>Ð§¹ûÀàÐÍ£ºrestoreSp »Ö¸´¾«Éñ / restoreHp »Ö¸´ÑªÁ¿</summary>
+        /// <summary>æ•ˆæžœç±»åž‹ï¼šrestoreSp æ¢å¤ç²¾ç¥ž / restoreHp æ¢å¤è¡€é‡</summary>
         public string effect;
 
-        /// <summary>×÷ÓÃ¶ÔÏó£ºworker£¨Ö´ÐÐ¹¤×÷µÄÔ±¹¤£©/ department£¨¸Ã²¿ÃÅËùÓÐÔ±¹¤£©</summary>
+        /// <summary>ä½œç”¨å¯¹è±¡ï¼šworkerï¼ˆæ‰§è¡Œå·¥ä½œçš„å‘˜å·¥ï¼‰/ departmentï¼ˆè¯¥éƒ¨é—¨æ‰€æœ‰å‘˜å·¥ï¼‰</summary>
         public string target;
 
-        /// <summary>Ð§¹ûÊýÖµ£¨Õ¼Î»£¬´ýÊµ²âµ÷²Î£©</summary>
+        /// <summary>æ•ˆæžœæ•°å€¼ï¼ˆå ä½ï¼Œå¾…å®žæµ‹è°ƒå‚ï¼‰</summary>
         public int value;
     }
 }

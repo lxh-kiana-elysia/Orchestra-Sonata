@@ -3,79 +3,79 @@ using System.Collections.Generic;
 namespace YuetanMingqu
 {
     /// <summary>
-    /// ÀÖ¶ÓÉÙÅ®Êı¾İÀà£¨´¿Êı¾İ£¬²»º¬Âß¼­£©¡£
-    /// Êı¾İÀ´Ô´£ºAssets/Data/BandMembers.json
-    /// ×Ö¶Î¹æ¸ñ£ºBand_Members.md¡¸×Ö¶ÎËµÃ÷¡¹£»Á½Ì×Êı¾İ¿â·ÖÀë¼û GDD ¡ì3.3£¨v1.5£©
-    /// Óë Character£¨ÆÕÍ¨Ô±¹¤£©µÄÇø±ğ£ºÓĞ×¨Êô×°±¸Óë¸öÈËÏß¡¢²»¿É¸ÄÍâ¹Û¡¢²»»áËÀÍö£¨±ÀÀ£½öÍË³¡ÊıÈÕ£©¡£
-    /// ËµÃ÷£º±¾ÀàÖ»´æ¡ï¾²Ì¬ÅäÖÃ£»ÔËĞĞÊ±×´Ì¬£¨¸öÈËÏß½ø¶È¡¢ÒÑ½âËø¾çÇé¡¢µ±Ç°ËÄÎ¬¡¢±ÀÀ£×´Ì¬£©ÓÉ³ÌĞòÉú³É²¢Èë´æµµ¡£
+    /// ä¹é˜Ÿå°‘å¥³æ•°æ®ç±»ï¼ˆçº¯æ•°æ®ï¼Œä¸å«é€»è¾‘ï¼‰ã€‚
+    /// æ•°æ®æ¥æºï¼šAssets/Data/BandMembers.json
+    /// å­—æ®µè§„æ ¼ï¼šBand_Members.mdã€Œå­—æ®µè¯´æ˜ã€ï¼›ä¸¤å¥—æ•°æ®åº“åˆ†ç¦»è§ GDD Â§3.3ï¼ˆv1.5ï¼‰
+    /// ä¸ Characterï¼ˆæ™®é€šå‘˜å·¥ï¼‰çš„åŒºåˆ«ï¼šæœ‰ä¸“å±è£…å¤‡ä¸ä¸ªäººçº¿ã€ä¸å¯æ”¹å¤–è§‚ã€ä¸ä¼šæ­»äº¡ï¼ˆå´©æºƒä»…é€€åœºæ•°æ—¥ï¼‰ã€‚
+    /// è¯´æ˜ï¼šæœ¬ç±»åªå­˜â˜…é™æ€é…ç½®ï¼›è¿è¡Œæ—¶çŠ¶æ€ï¼ˆä¸ªäººçº¿è¿›åº¦ã€å·²è§£é”å‰§æƒ…ã€å½“å‰å››ç»´ã€å´©æºƒçŠ¶æ€ï¼‰ç”±ç¨‹åºç”Ÿæˆå¹¶å…¥å­˜æ¡£ã€‚
     /// </summary>
-    [System.Serializable]   // ±ê¼Ç¿ÉĞòÁĞ»¯£ºJsonUtility ²ÅÄÜ¶ÁÈ¡/Ğ´Èë¸ÃÀà
+    [System.Serializable]   // æ ‡è®°å¯åºåˆ—åŒ–ï¼šJsonUtility æ‰èƒ½è¯»å–/å†™å…¥è¯¥ç±»
     public class BandMember
     {
-        /// <summary>Î¨Ò»±êÊ¶£¬¸ñÊ½ band_&lt;ÀÖ¶ÓËõĞ´&gt;_&lt;½ÇÉ«&gt;£¨Èç band_ppp_kasumi£»PPP=Poppin'Party¡¢mygo=MyGO!!!!!£©</summary>
+        /// <summary>å”¯ä¸€æ ‡è¯†ï¼Œæ ¼å¼ band_&lt;ä¹é˜Ÿç¼©å†™&gt;_&lt;è§’è‰²&gt;ï¼ˆå¦‚ band_ppp_kasumiï¼›PPP=Poppin'Partyã€mygo=MyGO!!!!!ï¼‰</summary>
         public string id;
 
-        /// <summary>ÏÔÊ¾Ãû³Æ£¨Ô­Öø½ÇÉ«Ãû£©</summary>
+        /// <summary>æ˜¾ç¤ºåç§°ï¼ˆåŸè‘—è§’è‰²åï¼‰</summary>
         public string name;
 
-        /// <summary>ËùÊôÀÖ¶Ó£¨Èç Poppin'Party¡¢MyGO!!!!!£©</summary>
+        /// <summary>æ‰€å±ä¹é˜Ÿï¼ˆå¦‚ Poppin'Partyã€MyGO!!!!!ï¼‰</summary>
         public string band;
 
-        /// <summary>ÑªÁ¿³õÊ¼Öµ£¨Ä¬ÈÏ 10£©£»ÅĞ¶¨¡¸±ÈÎä¡¹¹¤×÷µÄÊôĞÔ£»¹éÁãÔò±ÀÀ£</summary>
+        /// <summary>è¡€é‡åˆå§‹å€¼ï¼ˆé»˜è®¤ 10ï¼‰ï¼›åˆ¤å®šã€Œæ¯”æ­¦ã€å·¥ä½œçš„å±æ€§ï¼›å½’é›¶åˆ™å´©æºƒ</summary>
         public int hp;
 
-        /// <summary>¾«Éñ³õÊ¼Öµ£¨Ä¬ÈÏ 10£©£»ÅĞ¶¨¡¸Ì¸»°¡¹¹¤×÷µÄÊôĞÔ£»¹ıµÍÊ±ÎŞ·¨¹¤×÷</summary>
+        /// <summary>ç²¾ç¥åˆå§‹å€¼ï¼ˆé»˜è®¤ 10ï¼‰ï¼›åˆ¤å®šã€Œè°ˆè¯ã€å·¥ä½œçš„å±æ€§ï¼›è¿‡ä½æ—¶æ— æ³•å·¥ä½œ</summary>
         public int sp;
 
-        /// <summary>Ñİ×àË®Æ½³õÊ¼Öµ£¨Ä¬ÈÏ 10£©£»ÅĞ¶¨¡¸Ñİ×à¡¹¹¤×÷µÄÊôĞÔ</summary>
+        /// <summary>æ¼”å¥æ°´å¹³åˆå§‹å€¼ï¼ˆé»˜è®¤ 10ï¼‰ï¼›åˆ¤å®šã€Œæ¼”å¥ã€å·¥ä½œçš„å±æ€§</summary>
         public int performance;
 
-        /// <summary>¹²¸Ğ³õÊ¼Öµ£¨Ä¬ÈÏ 10£©£»ÅĞ¶¨¡¸´´×÷¡¹¹¤×÷µÄÊôĞÔ</summary>
+        /// <summary>å…±æ„Ÿåˆå§‹å€¼ï¼ˆé»˜è®¤ 10ï¼‰ï¼›åˆ¤å®šã€Œåˆ›ä½œã€å·¥ä½œçš„å±æ€§</summary>
         public int empathy;
 
-        /// <summary>×¨Êô¼¼ÄÜÃèÊöÎÄ°¸£¨´¿ÎÄ±¾£¬³ÌĞò²»¾İ´Ë¼ÆËã£»¼¼ÄÜÉúĞ§ĞèÁíÓĞĞ§¹ûÊı¾İ½á¹¹£©</summary>
+        /// <summary>ä¸“å±æŠ€èƒ½æè¿°æ–‡æ¡ˆï¼ˆçº¯æ–‡æœ¬ï¼Œç¨‹åºä¸æ®æ­¤è®¡ç®—ï¼›æŠ€èƒ½ç”Ÿæ•ˆéœ€å¦æœ‰æ•ˆæœæ•°æ®ç»“æ„ï¼‰</summary>
         public string skill;
 
-        /// <summary>»Ö¸´ËÙÂÊ£¨²İ°¸ 5.0/µ¥Î»Ê±¼ä£©£»»Ø¸´ÊÒÉèÊ©¿ÉÌáÉı</summary>
+        /// <summary>æ¢å¤é€Ÿç‡ï¼ˆè‰æ¡ˆ 5.0/å•ä½æ—¶é—´ï¼‰ï¼›å›å¤å®¤è®¾æ–½å¯æå‡</summary>
         public float recoveryRate;
 
-        /// <summary>¼ÓÈëÌõ¼ş£ºÍê³ÉÄ³ÈÎÎñ / Ä³ÒìÏëÌåµãÊı´ïµµÎ»¡£½ÇÉ«½âËøÖ»¿´´Ë×Ö¶Î</summary>
+        /// <summary>åŠ å…¥æ¡ä»¶ï¼šå®ŒæˆæŸä»»åŠ¡ / æŸå¼‚æƒ³ä½“ç‚¹æ•°è¾¾æ¡£ä½ã€‚è§’è‰²è§£é”åªçœ‹æ­¤å­—æ®µ</summary>
         public string unlockCondition;
 
-        /// <summary>×¨Êô×°±¸£¨E.G.O Ê½£©£º¼ÓÈëÊ±×Ô¶¯»ñµÃ£¬²»¿É×ªÈÃ¡¢ÎŞĞèÑĞ·¢</summary>
+        /// <summary>ä¸“å±è£…å¤‡ï¼ˆE.G.O å¼ï¼‰ï¼šåŠ å…¥æ—¶è‡ªåŠ¨è·å¾—ï¼Œä¸å¯è½¬è®©ã€æ— éœ€ç ”å‘</summary>
         public Equipment equipment;
 
-        /// <summary>°ó¶¨µÄÍ¬Î»ÌåÒìÏëÌå id£¨Èç aber_sun_01£©£»½öÎªĞğÊÂ²Êµ°£¬²»Ó°ÏìÁ÷³Ì</summary>
+        /// <summary>ç»‘å®šçš„åŒä½ä½“å¼‚æƒ³ä½“ idï¼ˆå¦‚ aber_sun_01ï¼‰ï¼›ä»…ä¸ºå™äº‹å½©è›‹ï¼Œä¸å½±å“æµç¨‹</summary>
         public string linkedAberrationId;
     }
 
     /// <summary>
-    /// ÀÖ¶ÓÉÙÅ®Êı¾İ¿â£¨¿ÇÀà£©¡£
-    /// ×÷ÓÃ£ºJsonUtility ²»Ö§³Ö½âÎö¶¥²ãÊı×é£¬¹ÊÓÃ±¾Àà°ü×¡ bandMembers ÁĞ±í£¬
-    /// Óë BandMembers.json ×îÍâ²ãµÄ {"bandMembers":[...]} Ò»Ò»¶ÔÓ¦¡£
+    /// ä¹é˜Ÿå°‘å¥³æ•°æ®åº“ï¼ˆå£³ç±»ï¼‰ã€‚
+    /// ä½œç”¨ï¼šJsonUtility ä¸æ”¯æŒè§£æé¡¶å±‚æ•°ç»„ï¼Œæ•…ç”¨æœ¬ç±»åŒ…ä½ bandMembers åˆ—è¡¨ï¼Œ
+    /// ä¸ BandMembers.json æœ€å¤–å±‚çš„ {"bandMembers":[...]} ä¸€ä¸€å¯¹åº”ã€‚
     /// </summary>
     [System.Serializable]
     public class BandMembersDatabase
     {
-        /// <summary>ÀÖ¶ÓÉÙÅ®ÁĞ±í£¬¼üÃû±ØĞëÓë JSON µÄ bandMembers Ò»ÖÂ</summary>
+        /// <summary>ä¹é˜Ÿå°‘å¥³åˆ—è¡¨ï¼Œé”®åå¿…é¡»ä¸ JSON çš„ bandMembers ä¸€è‡´</summary>
         public List<BandMember> bandMembers;
     }
 
     /// <summary>
-    /// ×°±¸²ÛÒıÓÃ£¨²»ÊÇ×°±¸µÄÍêÕûÊı¾İ£©¡£
-    /// ÕâÀïÖ»´æ×°±¸ id£¬×°±¸µÄÃû³Æ/ÊôĞÔ/ÑĞ·¢µãÊıµÈÍêÕûÊı¾İ¼û Equipments.json£¨Equipments.md£©¡£
-    /// ÓÃÍ¾£ºÀÖ¶ÓÉÙÅ®¼ÓÈëÊ±×Ô¶¯»ñµÃ²¢°ó¶¨ÕâÒ»Ì×£»ÆÕÍ¨Ô±¹¤ËÀÍöÊ±×°±¸µôÂäÏûÊ§¡£
+    /// è£…å¤‡æ§½å¼•ç”¨ï¼ˆä¸æ˜¯è£…å¤‡çš„å®Œæ•´æ•°æ®ï¼‰ã€‚
+    /// è¿™é‡Œåªå­˜è£…å¤‡ idï¼Œè£…å¤‡çš„åç§°/å±æ€§/ç ”å‘ç‚¹æ•°ç­‰å®Œæ•´æ•°æ®è§ Equipments.jsonï¼ˆEquipments.mdï¼‰ã€‚
+    /// ç”¨é€”ï¼šä¹é˜Ÿå°‘å¥³åŠ å…¥æ—¶è‡ªåŠ¨è·å¾—å¹¶ç»‘å®šè¿™ä¸€å¥—ï¼›æ™®é€šå‘˜å·¥æ­»äº¡æ—¶è£…å¤‡æ‰è½æ¶ˆå¤±ã€‚
     /// </summary>
     [System.Serializable]
     public class Equipment
     {
-        /// <summary>ÎäÆ÷×°±¸ id£¨Èç ego_weapon_sun_01£©</summary>
+        /// <summary>æ­¦å™¨è£…å¤‡ idï¼ˆå¦‚ ego_weapon_sun_01ï¼‰</summary>
         public string weapon;
 
-        /// <summary>»¤¼××°±¸ id£¨Èç ego_armor_sun_01£©</summary>
+        /// <summary>æŠ¤ç”²è£…å¤‡ idï¼ˆå¦‚ ego_armor_sun_01ï¼‰</summary>
         public string armor;
 
-        /// <summary>ÊÎÆ·×°±¸ id£¨Èç ego_gift_sun_01£©</summary>
+        /// <summary>é¥°å“è£…å¤‡ idï¼ˆå¦‚ ego_gift_sun_01ï¼‰</summary>
         public string accessory;
     }
 }
