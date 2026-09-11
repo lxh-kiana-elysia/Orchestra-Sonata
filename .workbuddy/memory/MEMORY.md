@@ -6,7 +6,9 @@
 - 2026-09-07 旧开发成果全部回滚删除（备份在 `桌面\乐团鸣曲_备份_20260907\`），9-08 起以导师制重新开发。
 
 ## 文档体系（版本对齐，冲突时 GDD 优先）
-- `GDD.docx` **v1.5**（设计宪法）；`agent.md` **v3.1**；`ARCHITECTURE.md` **v1.1**；`FDD.md` **v1.9**；`UI_Interaction_Spec.md`（F1-F14）。
+- `GDD.docx` **v1.5**（设计宪法）；`agent.md` **v3.1**；`ARCHITECTURE.md` **v1.1**；`FDD.md` **v2.2**；`UI_Interaction_Spec.md`（F1-F14）。
+- **FDD v2.1**：日循环状态机**废止「未达标强制结束（forced=true）」分支**（与 GDD §3.11 冲突）；明确两条回滚路径区别——「重新开始这一天」=当日内存态重置、不写盘；「回到记忆库」=读最近记忆日快照。
+- **FDD v2.2 新增 FDD-12 相机控制系统**（M3 范畴）：正交相机、WASD/中键拖动平移、滚轮缩放 0.5x~2.0x 钳制、边界钳制、插值平滑、`LateUpdate` 更新；部门场景尺寸草案 40×12 单位、默认视野约 1/2 宽度；用 Input System 定义 Camera/Pan·Zoom·Reset。
 - **独立策划文件（v1.5"内容文件独立化"）**：`Band_Members.md`（乐队少女名册，含香澄/爱音完整数据与专属装备）→ 程序文件 `Assets/Data/BandMembers.json`；`Aberrations.md`（异想体图鉴+字段速查+JSON）；`Equipments.md`（装备图鉴，`ego_weapon_sun_01` 等 ID）；`Quests.md`；`Narrative_Index.md`。根目录 15 张脑叶参考图。
 - **命名（强制，2026-09-08 定）**：JSON 键与数据类字段一律 **camelCase**，**严禁 snake_case**（JsonUtility 键名不符时静默为 0，高危）。故 `hair_style`→`hairStyle`。
 - **字段拆分定稿**：`energyPerSuccess`=情感粒子产出 / `pointsPerSuccess`=异想体点数产出 / `accumulatedPoints`=运行时累积点数（原 `points`）。
@@ -32,6 +34,7 @@
 ## 实现约定（v3.1/ARCHITECTURE）
 - 分层：Entities 纯数据 / Systems 事件解耦（EventManager）/ UI 无规则 / Narrative 不改数值；状态切换仅 GameManager 发起。
 - 数据驱动禁硬编码；核心计算抽纯函数（可单测，Unity Test Framework EditMode，Assets/Tests/）。
+- **UI 事件绑定两大坑（2026-09-11 踩过，务必遵守）**：①**改名陷阱**——UnityEvent 按"方法名字符串"保存绑定，public 方法改名后 Inspector 绑定静默失效（显示 No Function/Missing）；②**参数模式陷阱**——绑定时要选**动态参数**（用事件实时值，序列化为 `m_Mode: 0`），误选成"常量参数"版本（`m_Mode: 4`/Float + `m_FloatArgument`）会让回调**永远收到固定常量**（如 0），表现为"数据被莫名清零"。**推荐做法：改用代码绑定** `slider.onValueChanged.AddListener(OnXxx)`（OnEnable 加、OnDisable 移除），可同时规避以上两坑。
 - **已拍板（M1）**：JSON 方案 = **JsonUtility**；根命名空间 = **YuetanMingqu**。
 - 进度：M0 完成（2026-09-08）；M1 已交付（数据三件套+Entities 4 文件+静态 DataManager+DataLoadDemo，演示场景=用户自建的 MainMenu.unity），等"M1 完成"。
 - 晚风会自学抢跑（已自建 MainMenu 场景/GameManager），交付前先盘点工作区避免覆盖其成果；其 GameManager 单例骨架已保留并入 YuetanMingqu 命名空间。

@@ -44,7 +44,7 @@
 ```
 ┌─────────────────────────────────────────────────┐
 │  UI 层（Screens / Panels / Widgets）             │  只做显示与输入转发
-│  MainMenu · Deployment · TreeOverview ·          │  不含玩法规则
+│  MainMenu · TreeOverview · Deployment ·          │  不含玩法规则
 │  Department · Codex · Pause · Settings · Loading │
 └───────────────┬─────────────────────────────────┘
                 │ 事件订阅 / 指令调用
@@ -73,14 +73,18 @@
 ### 2.2 游戏状态机（GameManager 统一调度）
 
 ```
-BOOT → MAIN_MENU(L0) → LOADING → DEPLOY(L1 编成)
-      → TREE_OVERVIEW(L2) → DEPARTMENT(L3)
+BOOT → MAIN_MENU(L0) → LOADING → CUTSCENE（每日剧情）
+      → TREE_OVERVIEW(L1 生命树·部门开放)
+      → LOADING → DEPLOY(L2 编成·部署员工)
+      → DEPARTMENT(L3)
             ├─ BATTLE（出逃/镇压）
-            ├─ CUTSCENE（剧情）
+            ├─ CUTSCENE（节点剧情）
             └─ PAUSE / SETTINGS / CODEX（覆盖层）
-      → DAY_END（结算）→ 回 DEPLOY（下一天）
-      → GAMEOVER / ENDING（Day50 真/假结局）
+      → DAY_END（结算）→ 次日 CUTSCENE → 回 TREE_OVERVIEW（下一天）
+      → ENDING（Day50 真/假结局）
 ```
+
+> **流程顺序（2026-09-12 修订）**：生命树（L1）在编成（L2）**之前**——每天开始先过剧情 → 生命树选「开放哪个部门 + 今日异想体收容进哪个部门」→ 加载 → 编成部署员工 → 「开始这一天」进入 L3。层级编号与实际顺序一致。
 
 **约束**：状态切换只由 `GameManager` 发起，UI 与各 System 不得自行 `LoadScene`。
 
@@ -328,14 +332,17 @@ public interface ITrialSystem {
 ### 5.2 一天的运行时数据流
 
 ```
-① 编成（DEPLOY）
-   玩家从可用员工（普通员工 + 已解锁乐队少女）中选当日阵容
-   → GameManager 记录今日编成 → 显示当日能源配额与异想体候选
-   → 玩家从"今日候选"（池抽取 3+天数/3，上限 5）选 1 个收容；未选回池
-   → 点「开始这一天」→ 进入 TREE_OVERVIEW
+① 部门开放与收容分配（TREE_OVERVIEW，L1，每日必经）
+   每日剧情结束 → 进入生命树
+   → 若到达解锁天数且有开放机会：点选 LOCKED 节点开放 → F5 确认弹窗 → OPENING → OPEN
+   → 当日抽到的异想体（候选池 3+天数/3，上限 5，选 1；未选回池）在此决定收容进哪个已开放且未满的部门
+     （每部门异想体上限 4，[GDD §3.1 四 草案]）
+   → 5 的倍数天不抽新异想体，跳过分配直接继续
+   → 点「继续」→ 加载 → 进入 L2 编成
 
-② 部门选择（TREE_OVERVIEW → DEPARTMENT）
-   点击已点亮节点（乐队）→ 加载该部门场景 → 初始化员工与异想体实例
+② 编成（DEPLOY，L2）
+   从可用员工（普通员工 + 已解锁乐队少女）中选当日阵容；可在此训练（消耗星石）
+   → 点「开始这一天」→ 进入 L3 部门场景（加载该部门员工与异想体实例）
 
 ③ 工作循环（DEPARTMENT，实时）
    选中员工 → 移动（寻路）→ 对异想体下达工作
