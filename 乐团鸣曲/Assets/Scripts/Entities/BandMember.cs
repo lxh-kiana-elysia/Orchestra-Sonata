@@ -21,6 +21,8 @@ namespace YuetanMingqu
         /// <summary>所属乐队（如 Poppin'Party、MyGO!!!!!）</summary>
         public string band;
 
+        public bool isLeader;
+
         /// <summary>血量初始值（默认 10）；判定「比武」工作的属性；归零则崩溃</summary>
         public int hp;
 
@@ -47,6 +49,8 @@ namespace YuetanMingqu
 
         /// <summary>绑定的同位体异想体 id（如 aber_sun_01）；仅为叙事彩蛋，不影响流程</summary>
         public string linkedAberrationId;
+
+
     }
 
     /// <summary>

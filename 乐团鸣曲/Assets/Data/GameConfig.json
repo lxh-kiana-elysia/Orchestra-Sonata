@@ -6,9 +6,7 @@
     "trueEndingDeadlineDay": 46,      
     "memoryDays": [5,10,15,20,25,30,35,40,45],   
     "quotaBase": 300,
-    "_note":"占位",                
     "quotaGrowthPer10Days": 2.0,
-    "_note":"占位",           
     "trialDayQuotaMultiplier": 1.3    
   },
 
@@ -18,7 +16,6 @@
 
   "work": {                           
     "failOutputRatio": 0.25,
-    "_note":"占位",                
     "diminishingReturnsStep": 0.2,   
     "growthOnSuccess": 0.10,          
     "growthOnFailure": 0.03,          
@@ -28,11 +25,8 @@
   "training": {                       
     "costByTargetLevel": [10,30,100,300,800]   
   },
-    "_note":"占位",      
-  "recruitment": { "cost": 50, "slotsByFacilityLevel": [2,4,6,8] },   
-    "_note":"占位",      
+  "recruitment": { "cost": 50, "slotsByFacilityLevel": [2,4,6,8] },     
   "economy": { "starStoneConversionRate": 10 },   
-    "_note":"占位",      
   "save": { "directoryName": "ResonanceShelter" },                     
 
     "drawRates": [

@@ -152,6 +152,7 @@ MonoBehaviour:
   _aberrationJson: {fileID: 4900000, guid: 850eb0687ad0eff45ab312a746d35b63, type: 3}
   _characterJson: {fileID: 4900000, guid: 380256302a9328040990f7686ee6d3a6, type: 3}
   _gameConfigJson: {fileID: 4900000, guid: 08251e6b1a44e38449635fa0661a54c8, type: 3}
+  _bandNodeJson: {fileID: 4900000, guid: 17da7d7578c164448b824b8ad8d2600c, type: 3}
 --- !u!4 &153962554
 Transform:
   m_ObjectHideFlags: 0

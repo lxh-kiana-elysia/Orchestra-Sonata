@@ -25,6 +25,8 @@ namespace YuetanMingqu
         /// <summary>全局配置（GameConfig.json）</summary>
         [SerializeField] private TextAsset _gameConfigJson;
 
+        [SerializeField] private TextAsset _bandNodeJson;
+
         /// <summary>
         /// 场景启动后：先校验四个文件引用，再加载数据，最后打印结果。
         /// Start 由 Unity 在第一帧更新前自动调用一次（agent.md §4.2：引用须校验）。
@@ -56,9 +58,15 @@ namespace YuetanMingqu
                 return;
             }
 
+            if (_bandNodeJson == null)
+            {
+                Debug.LogError("未挂载部门数据");
+                return;
+            }
+
             // ② 加载：注意实参顺序要与 DataManager.LoadAll 的形参顺序一致
             //    （bandMembers, aberrations, characters, config）
-            if (DataManager.LoadAll(_bandMembersJson, _aberrationJson, _characterJson, _gameConfigJson))
+            if (DataManager.LoadAll(_bandMembersJson, _aberrationJson, _characterJson, _gameConfigJson,_bandNodeJson))
             {
                 // ③ 打印验证结果：数量 + 配置值 + 按 id 查询
                 Debug.Log(DataManager.Characters.characters.Count);
@@ -66,6 +74,11 @@ namespace YuetanMingqu
                 Debug.Log(DataManager.Aberrations.aberrations.Count);
                 Debug.Log(DataManager.Config.dayLoop.quotaBase);
                 Debug.Log(DataManager.GetBandMember("band_ppp_kasumi").name + "\n" + DataManager.GetBandMember("band_ppp_kasumi").linkedAberrationId);
+                Debug.Log($"Bands 条数：{DataManager.BandNodes.bandNodes.Count}");
+                Debug.Log($"节点1：nodeIndex={DataManager.BandNodes.bandNodes[0].nodeIndex} " +
+                          $"unlockDay={DataManager.BandNodes.bandNodes[0].unlockDay} " +
+                          $"leader={DataManager.BandNodes.bandNodes[0].leader} " +
+                          $"leaderId={DataManager.BandNodes.bandNodes[0].leaderId}");
             }
         }
     }

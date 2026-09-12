@@ -23,6 +23,8 @@ namespace YuetanMingqu
         /// <summary>全局配置（GameConfig.json）。顶层即对象，无需壳类</summary>
         public static GameConfig Config { get; private set; }
 
+        public static BandNodeDatabase BandNodes { get; private set; }
+
         /// <summary>
         /// 解析四份 JSON 并缓存到上面的静态属性。
         /// </summary>
@@ -36,14 +38,16 @@ namespace YuetanMingqu
         /// 判空检查到列表层：键名写错时壳类仍会创建、但内部列表为 null，只查壳类会漏掉这种情况。
         /// </remarks>
         public static bool LoadAll(TextAsset bandMemberJson, TextAsset aberrationsJson,
-                                   TextAsset charactersJson, TextAsset configJson)
+                                   TextAsset charactersJson, TextAsset configJson,
+                                   TextAsset bandNodesJson)
         {
             BandMembers = JsonUtility.FromJson<BandMembersDatabase>(bandMemberJson.text);
             Aberrations = JsonUtility.FromJson<AberrationDatabase>(aberrationsJson.text);
             Characters = JsonUtility.FromJson<CharacterDatabase>(charactersJson.text);
             Config = JsonUtility.FromJson<GameConfig>(configJson.text);
-            if (BandMembers == null || Aberrations == null || Characters == null || Config == null
-                ||BandMembers.bandMembers == null || Aberrations.aberrations == null ||Characters.characters==null)
+            BandNodes = JsonUtility.FromJson<BandNodeDatabase>(bandNodesJson.text);
+            if (BandMembers == null || Aberrations == null || Characters == null || Config == null|| BandNodes == null
+                ||BandMembers.bandMembers == null || Aberrations.aberrations == null ||Characters.characters==null || BandNodes.bandNodes == null)
             {
                 Debug.LogError("存在空数据集");
                 return false;

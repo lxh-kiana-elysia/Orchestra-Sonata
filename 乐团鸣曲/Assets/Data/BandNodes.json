@@ -1,0 +1,14 @@
+{
+  "bandNodes": [
+  { "id": "band_ppp",  "band": "Poppin'Party",        "leader": "户山香澄",   "leaderId": "band_ppp_kasumi",  "layer": "Asiyah",   "nodeIndex": 1,  "unlockDay": 1,  "defaultState": "OPEN"   },
+  { "id": "band_pasp", "band": "Pastel*Palettes",     "leader": "丸山彩",     "leaderId": "band_pasp_aya",    "layer": "Asiyah",   "nodeIndex": 2,  "unlockDay": 6, "defaultState": "LOCKED" },
+  { "id": "band_aglw", "band": "Afterglow",           "leader": "美竹兰", "leaderId": "band_aglw_ran", "layer": "Asiyah",   "nodeIndex": 3,  "unlockDay": 11,  "defaultState": "LOCKED" },
+  { "id": "band_hhw",  "band": "Hello, Happy World!", "leader": "弦卷心",     "leaderId": "band_hhw_kokoro",  "layer": "Asiyah",   "nodeIndex": 4,  "unlockDay": 16, "defaultState": "LOCKED" },
+  { "id": "band_ros",  "band": "Roselia",             "leader": "凑友希那",   "leaderId": "band_ros_yukina",  "layer": "Briah",    "nodeIndex": 5,  "unlockDay": 20, "defaultState": "LOCKED" },
+  { "id": "band_ras",  "band": "RAISE A SUILEN",      "leader": "CHU²",      "leaderId": "band_ras_chu2",    "layer": "Briah",    "nodeIndex": 6,  "unlockDay": 25, "defaultState": "LOCKED" },
+  { "id": "band_moni", "band": "Morfonica",           "leader": "仓田真白",   "leaderId": "band_moni_mashiro","layer": "Briah",    "nodeIndex": 7,  "unlockDay": 30, "defaultState": "LOCKED" },
+  { "id": "band_mygo", "band": "MyGO!!!!!",           "leader": "高松灯",      "leaderId": "band_mygo_tomori",                 "layer": "Atziluth", "nodeIndex": 8,  "unlockDay": 36, "defaultState": "LOCKED" },
+  { "id": "band_amu",  "band": "Ave Mujica",          "leader": "丰川祥子",   "leaderId": "band_amu_sakiko",  "layer": "Atziluth", "nodeIndex": 9,  "unlockDay": 41, "defaultState": "LOCKED" },
+  { "id": "band_mwt",  "band": "梦限大 MewType",       "leader": "仲町阿拉蕾", "leaderId": "band_mwt_arale",   "layer": "Atziluth", "nodeIndex": 10, "unlockDay": 46, "defaultState": "LOCKED" }
+]
+}
