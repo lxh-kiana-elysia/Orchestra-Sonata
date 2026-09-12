@@ -11,3 +11,11 @@
 Thumbs.db
 Desktop.ini
 .DS_Store
+
+# 旧版文档备份（保留在磁盘，不进仓库）
+GDD_v*_备份_*.docx
+*.bak
+
+# 临时提取/中间产物
+.workbuddy/gdd_extract.txt
+.workbuddy/tmp/
