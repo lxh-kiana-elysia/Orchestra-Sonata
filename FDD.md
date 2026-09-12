@@ -1,7 +1,7 @@
 # FDD.md — 乐团鸣曲 详细功能设计文档
 
-> 文档版本：v2.4（2026-09-12）
-> 上游依据：`GDD.docx` v1.7 · `ARCHITECTURE.md` v1.1 · `agent.md` v3.3
+> 文档版本：v2.5（2026-09-12）
+> 上游依据：`GDD.docx` v1.8 · `ARCHITECTURE.md` v1.3 · `agent.md` v3.4
 > 定位：把 GDD 中的规则**拆解为可实现的技术规格**——状态机、流程图、数据结构、配置项、边界条件。
 >
 > **与 GDD 的分工（重要，避免重复维护）**：
@@ -393,24 +393,28 @@ OPEN --部门异想体数达上限 4--> OPEN（满，仍可进入但不可再放
 
 ```jsonc
 [
-  { "id": "band_ppp",  "band": "Poppin'Party",        "leader": "户山香澄",   "leaderId": "band_ppp_kasumi",  "layer": "Asiyah",   "nodeIndex": 1,  "unlockDay": 1,  "defaultState": "OPEN"   },
-  { "id": "band_aglw", "band": "Afterglow",           "leader": "上原绯玛丽", "leaderId": "band_aglw_himari", "layer": "Asiyah",   "nodeIndex": 2,  "unlockDay": 6,  "defaultState": "LOCKED" },
-  { "id": "band_pasp", "band": "Pastel*Palettes",     "leader": "丸山彩",     "leaderId": "band_pasp_aya",    "layer": "Asiyah",   "nodeIndex": 3,  "unlockDay": 11, "defaultState": "LOCKED" },
-  { "id": "band_hhw",  "band": "Hello, Happy World!", "leader": "弦卷心",     "leaderId": "band_hhw_kokoro",  "layer": "Asiyah",   "nodeIndex": 4,  "unlockDay": 16, "defaultState": "LOCKED" },
-  { "id": "band_ros",  "band": "Roselia",             "leader": "凑友希那",   "leaderId": "band_ros_yukina",  "layer": "Briah",    "nodeIndex": 5,  "unlockDay": 21, "defaultState": "LOCKED" },
-  { "id": "band_moni", "band": "Morfonica",           "leader": "仓田真白",   "leaderId": "band_moni_mashiro","layer": "Briah",    "nodeIndex": 6,  "unlockDay": 26, "defaultState": "LOCKED" },
-  { "id": "band_ras",  "band": "RAISE A SUILEN",      "leader": "CHU²",      "leaderId": "band_ras_chu2",    "layer": "Briah",    "nodeIndex": 7,  "unlockDay": 31, "defaultState": "LOCKED" },
-  { "id": "band_mygo", "band": "MyGO!!!!!",           "leader": "",           "leaderId": "",                 "layer": "Atziluth", "nodeIndex": 8,  "unlockDay": 36, "defaultState": "LOCKED" },
-  { "id": "band_amu",  "band": "Ave Mujica",          "leader": "丰川祥子",   "leaderId": "band_amu_sakiko",  "layer": "Atziluth", "nodeIndex": 9,  "unlockDay": 41, "defaultState": "LOCKED" },
-  { "id": "band_mwt",  "band": "梦限大 MewType",       "leader": "仲町阿拉蕾", "leaderId": "band_mwt_arale",   "layer": "Atziluth", "nodeIndex": 10, "unlockDay": 46, "defaultState": "LOCKED" }
+  { "id": "band_ppp",  "band": "Poppin'Party",        "leader": "户山香澄",   "leaderId": "band_ppp_kasumi",   "layer": "Asiyah",   "nodeIndex": 1,  "unlockDay": 1,  "defaultState": "OPEN"   },
+  { "id": "band_pasp", "band": "Pastel*Palettes",     "leader": "丸山彩",     "leaderId": "band_pasp_aya",     "layer": "Asiyah",   "nodeIndex": 2,  "unlockDay": 6,  "defaultState": "LOCKED" },
+  { "id": "band_aglw", "band": "Afterglow",           "leader": "美竹兰",     "leaderId": "band_aglw_ran",     "layer": "Asiyah",   "nodeIndex": 3,  "unlockDay": 11, "defaultState": "LOCKED" },
+  { "id": "band_hhw",  "band": "Hello, Happy World!", "leader": "弦卷心",     "leaderId": "band_hhw_kokoro",   "layer": "Asiyah",   "nodeIndex": 4,  "unlockDay": 16, "defaultState": "LOCKED" },
+  { "id": "band_ros",  "band": "Roselia",             "leader": "凑友希那",   "leaderId": "band_ros_yukina",   "layer": "Briah",    "nodeIndex": 5,  "unlockDay": 20, "defaultState": "LOCKED" },
+  { "id": "band_ras",  "band": "RAISE A SUILEN",      "leader": "CHU²",      "leaderId": "band_ras_chu2",     "layer": "Briah",    "nodeIndex": 6,  "unlockDay": 25, "defaultState": "LOCKED" },
+  { "id": "band_moni", "band": "Morfonica",           "leader": "仓田真白",   "leaderId": "band_moni_mashiro", "layer": "Briah",    "nodeIndex": 7,  "unlockDay": 30, "defaultState": "LOCKED" },
+  { "id": "band_mygo", "band": "MyGO!!!!!",           "leader": "高松灯",     "leaderId": "band_mygo_tomori",  "layer": "Atziluth", "nodeIndex": 8,  "unlockDay": 36, "defaultState": "LOCKED" },
+  { "id": "band_amu",  "band": "Ave Mujica",          "leader": "丰川祥子",   "leaderId": "band_amu_sakiko",   "layer": "Atziluth", "nodeIndex": 9,  "unlockDay": 41, "defaultState": "LOCKED" },
+  { "id": "band_mwt",  "band": "梦限大 MewType",       "leader": "仲町阿拉蕾", "leaderId": "band_mwt_arale",    "layer": "Atziluth", "nodeIndex": 10, "unlockDay": 46, "defaultState": "LOCKED" }
 ]
 ```
 - 键名一律 **camelCase**（JsonUtility 静默失败风险，见 §4.4）。
 - `aberrationCapacity`（每部门上限，草案 4）建议写入 `GameConfig.json` 而非逐节点配置。
 - 运行时状态（当前已收容异想体列表、节点实际状态）**不写进配置**，运行时生成并入存档。
 - ⚠️ **`id` 的乐队缩写为建议值，待策划确认**（仅 `PPP` = Poppin'Party、`mygo` = MyGO!!!!! 已有先例，见 `Band_Members.md`）。
-- ⚠️ **节点 8（MyGO!!!!!）原著官方未设队长** → `leader` / `leaderId` 留空，UI 需容错（显示"队长未定"），
-  `TODO(设计待确认): 关联 GDD §3.14 二`（建议：高松灯）。
+- ✅ **部门顺序与解锁天数已全面对齐脑叶（GDD v1.8）**：中层 = 中央本部 Day20 → 惩戒部 Day25 → 福利部 Day30
+  （原为 福利 Day21 / 中央本部 Day26 / 惩戒 Day31）。
+  ⚠️ 副作用：**三个中层部门都在 5 的倍数天开放**，与记忆日重合 → 当天不抽新异想体，生命树只做"开放部门"一步；
+  好处是部门开放失败可借记忆日回滚。若不接受此副作用，请把天数改回 Day21/26/31。
+- ⚠️ **队长更正（策划 2026-09-12 拍板）**：Afterglow 队长 = **美竹兰**（主唱兼吉他），**不是贝斯手上原绯玛丽**；
+  MyGO!!!!! 原著未设队长，本作**自定高松灯**。
 
 ### 8.4.1 队长机制（GDD v1.7 定稿）
 
@@ -443,7 +447,8 @@ OPEN --部门异想体数达上限 4--> OPEN（满，仍可进入但不可再放
 - [ ] 部门场景能正确加载该部门的异想体与员工
 - [ ] 编成可保存/读取预设
 - [ ] 生命树节点上显示**队长名**（不是脑叶 Sephirot 名）
-- [ ] 节点 8（MyGO!!!!!）`leader` 为空时 UI 容错显示"队长未定"，不报错
+- [ ] 10 个节点按 `unlockDay` 升序解锁：**Day 1 / 6 / 11 / 16 / 20 / 25 / 30 / 36 / 41 / 46**（中层 Day20/25/30 已对齐脑叶）
+- [ ] UI 容错：`leader` 字段为空时显示「队长未定」而非报错（当前 10 节点均已填，属健壮性检查）
 - [ ] 队长可正常被派遣工作，且遵循乐队少女规则（崩溃退场、**不死亡**）
 
 ---
@@ -823,6 +828,7 @@ void MoveCamera(Vector2 delta) {
 | 日期 | 版本 | 说明 |
 |---|---|---|
 | 2026-09-07 | v1.0 | 初版：8 个模块 FDD（日循环/工作/异想体/员工/考验/存档/剧情/编成节点），含状态机、关键逻辑、验收点；数值配置汇总与 7 项待确认清单。**不含美术风格**（项目美术不基于脑叶） |
+| 2026-09-12 | v2.5 | **全面对齐脑叶（GDD v1.8 同步）**：①中层部门顺序与天数改为 **中央本部 Day20 → 惩戒部 Day25 → 福利部 Day30**（原 福利21/中央本部26/惩戒31），`Bands.json` 的 `nodeIndex`/`unlockDay` 随之重排（RAS 7→6、Morfonica 6→7）；②**队长更正**：Afterglow 队长 = **美竹兰**（原误写为贝斯手上原绯玛丽）、MyGO!!!!! 队长 = **高松灯**（原留空）；③节点 2/3 对调（情报部 = Pastel*Palettes 丸山彩、安保部 = Afterglow 美竹兰）；④§8.6 验收点改为按 10 个 `unlockDay` 升序校验。⚠️ 副作用已记录：三个中层部门都在 5 的倍数天开放，与记忆日重合 |
 | 2026-09-12 | v2.4 | **部门部长改为乐队队长（GDD v1.7 同步）**：①FDD-08 §8.4 `Bands.json` 补全 **10 个节点**（`sephirot` 字段删除，改为 `leader` + `leaderId`），10 支乐队按剧情/情感深度递进定序：Poppin'Party→Afterglow→Pastel*Palettes→Hello Happy World→Roselia→Morfonica→RAISE A SUILEN→MyGO!!!!!→Ave Mujica→梦限大MewType；②新增 §8.4.1 队长机制（队长=可派遣的乐队少女之一，不新增 NPC 实体，仅 `isLeader` 标记；可工作、崩溃退场不死亡；队长身份只给部门加成+专属台词+节点显示名）；③§8.6 补 3 条验收点（节点显示队长名、MyGO 队长为空时 UI 容错、队长可派遣）。⚠️ 待确认：乐队 id 缩写建议值、MyGO!!!!! 队长（原著未设） |
 | 2026-09-12 | v2.3 | **流程顺序修订（用户定稿）**：生命树（L1）移到编成（L2）**之前**，且**每天都经过**——每日剧情 → L1 生命树（开放部门 + 指定今日异想体收容进哪个部门，每部门上限 4，5 的倍数天不抽新异想体）→ 加载 → L2 编成（部署员工）→ 「开始这一天」→ L3。FDD-08 重写为 8 小节（职责表/编成/节点状态机/`Bands.json` 草案/边界与待确认/验收点）；GDD §3.14 上层顺序更正为 控制部→情报部→安保部→培训部（对齐脑叶） |
 | 2026-09-10 | v2.2 | 新增 FDD-12 相机控制系统（参考脑叶）：正交相机、平移（WASD/中键拖动）、滚轮缩放（0.5x~2.0x 钳制）、边界限制、平滑插值、部门场景尺寸草案（40x12 单位，默认视野约 1/2）、7 条验收点

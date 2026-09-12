@@ -6,15 +6,16 @@
 - 2026-09-07 旧开发成果全部回滚删除（备份在 `桌面\乐团鸣曲_备份_20260907\`），9-08 起以导师制重新开发。
 
 ## 文档体系（版本对齐，冲突时 GDD 优先）
-- 2026-09-12 起对齐版本：**`GDD.docx` v1.7**；**`agent.md` v3.3**；**`ARCHITECTURE.md` v1.2**；**`FDD.md` v2.4**；**`UI_Interaction_Spec.md` v1.3**。（v1.7 = 部门部长改乐队队长 + 10 支乐队节点定稿 + 移除 Sephirot 代号）
+- 2026-09-12 起对齐版本：**`GDD.docx` v1.8**；**`agent.md` v3.4**；**`ARCHITECTURE.md` v1.3**；**`FDD.md` v2.5**；**`UI_Interaction_Spec.md` v1.3**；**`Band_Members.md` v1.2**。（v1.7 = 部门部长改乐队队长 + 移除 Sephirot 代号；v1.8 = 部门顺序与解锁天数全面对齐脑叶 + 队长更正）
 - **★GDD v1.6 流程重排（2026-09-12，最高优先，替代旧 L1/L2 说法）**：L0 开始菜单 →（加载）→ 每日剧情 CUTSCENE → **L1 生命树·部门开放（每日必经）** →（加载）→ **L2 编成·部署员工** → 「开始这一天」→ **L3 部门场景**。
   - 生命树职责：① 开放部门（LOCKED 点选 → F5 确认 → OPENING → OPEN）；② 决定**当日抽到的异想体收容进哪个已开放且未满的部门**（每部门上限 4，草案）；③ 点「继续」→ 加载 → 进 L2 编成。
   - **5 的倍数天不抽新异想体**，生命树跳过分配直接继续。
   - 「开始这一天」按钮归 **L2 编成**，点击后**直接进 L3**（不再经过生命树）。
   - 状态机构型：BOOT → MAIN_MENU → LOADING → CUTSCENE → TREE_OVERVIEW(L1) → LOADING → DEPLOY(L2) → DEPARTMENT(L3) → DAY_END → 次日 CUTSCENE → TREE_OVERVIEW。
 - **★部门负责人 = 乐队队长，禁用脑叶 Sephirot 名（GDD v1.7，最高优先）**：Malkuth/Yesod/Netzach/Hod/Chesed/Tiphereth/Geburah/Hokma/Binah/Kether **全部移除**，节点上显示**队长名**。
-  - 10 节点（按剧情/情感深度递进）：①控制部 Poppin'Party **户山香澄** Day1 ②情报部 Afterglow **上原绯玛丽** Day6 ③安保部 Pastel*Palettes **丸山彩** Day11 ④培训部 Hello, Happy World! **弦卷心** Day16 ⑤福利部 Roselia **凑友希那** Day21 ⑥中央本部 Morfonica **仓田真白** Day26 ⑦惩戒部 RAISE A SUILEN **CHU²** Day31 ⑧记录部 MyGO!!!!! **待定（原著无队长）** Day36 ⑨研发部 Ave Mujica **丰川祥子** Day41 ⑩构筑部 梦限大MewType **仲町阿拉蕾** Day46。
-  - ⚠️ **Afterglow 队长是贝斯手上原绯玛丽，不是美竹兰**；RAS 队长有争议（CHU² vs LAYER）；MyGO!!!!! 原著未设队长 → `leader` 留空，UI 显示「队长未定」。
+  - 10 节点（**部门顺序与解锁天数已全面对齐脑叶**）：①控制部 Poppin'Party **户山香澄** Day1 ②情报部 Pastel*Palettes **丸山彩** Day6 ③安保部 Afterglow **美竹兰** Day11 ④培训部 Hello, Happy World! **弦卷心** Day16 ⑤**中央本部** Roselia **凑友希那** **Day20** ⑥**惩戒部** RAISE A SUILEN **CHU²** **Day25** ⑦**福利部** Morfonica **仓田真白** **Day30** ⑧记录部 MyGO!!!!! **高松灯** Day36 ⑨研发部 Ave Mujica **丰川祥子** Day41 ⑩构筑部 梦限大MewType **仲町阿拉蕾** Day46。
+  - **解锁序列 = 1/6/11/16/20/25/30/36/41/46**，中层为 Day20/25/30（照搬脑叶），**不再是等距 5 天一档**。副作用：三个中层部门都落在 5 的倍数天（记忆日）→ 当天不抽新异想体，生命树只做"开放部门"。
+  - ⚠️ **队长以策划拍板为准，不要再去查资料"纠正"**：**Afterglow = 美竹兰**（主唱兼吉他、发起人；虽部分中文资料写贝斯手上原绯玛丽是"协调员/队长"，本作**以兰为准**）；RAS = **CHU²**；MyGO!!!!! 原著无队长，本作**自定高松灯**。
   - **队长 = 可派遣的乐队少女之一，不是独立 NPC、不新增数据实体**：只需 `BandMembers.json` 加 `isLeader: true`，`Bands.json` 用 `leader`/`leaderId` 反查。队长可工作、崩溃退场 3 天、**不死亡**、不额外占派遣名额；队长身份只给部门加成 + 专属台词 + 节点显示名，**不影响数值与流程**。
 - **FDD v2.3 的 FDD-08 已重写**为 8 小节（生命树职责表 / 编成 / 节点状态机 / `Bands.json` 草案 / 边界与待确认 / 验收点）。**遗留 3 项待确认**：①工程缺 `Bands.json` 部门节点数据源（M3 开工前必补）；②L3 内如何切换到另一已开放部门未定义；③所有部门全满 4 个时的处理未定。
 - **FDD v2.1**：日循环状态机**废止「未达标强制结束（forced=true）」分支**（与 GDD §3.11 冲突）；明确两条回滚路径区别——「重新开始这一天」=当日内存态重置、不写盘；「回到记忆库」=读最近记忆日快照。
@@ -66,7 +67,8 @@
 - **Git 路径坑**：仓库根在 `Desktop\乐团鸣曲`（含 `.git`），Unity 工程在子目录 `乐团鸣曲\`。所有 git 路径必须带 `乐团鸣曲/` 前缀，`git show HEAD:乐团鸣曲/Assets/...` 才是对的。
 - **M2 状态机实现细节（已定稿）**：`GameState` 13 个枚举（Boot/MainMenu/Settings/Deploy/Loading/TreeOverview/Department/Battle/Cutscene/Pause/Codex/Ending/DayEnd）；`GameManager` 提供 `ChangeState`（主线换屏，不压栈、不去重）/ `PushState`（覆盖层，压栈 + 去重防连点）/ `GoBack`（弹栈）；判断标准=**屏幕上原内容是否还在**。`GameManager` 挂 `[DefaultExecutionOrder(-100)]`。
 - **UIManager 架构决策（已定稿）**：不能 `DontDestroyOnLoad`（会持所属场景已销毁物体的假 null 引用）；**每场景一份**，各管本场景界面；必须挂**根级、全程不关闭**的物体（否则 `OnDisable` 丢订阅）；**订阅放 `Start`**（`OnEnable` 可能早于别的物体 `Awake`，实测踩过）；职责严格限定"只开关 SetActive"，业务由各界面自己负责。
-- **M2/M3 里程碑细化**（2026-09-12 重订）：M2 = 主菜单 + 设置 + **状态机/屏幕栈**（含加载屏）；M3 = 一天能玩，**7 小步**：①**M3-0 补 `Bands.json` + `BandNodeData`**（FDD-08 §8.4 字段 **`id`/`band`/`leader`/`leaderId`/`layer`/`nodeIndex`/`unlockDay`/`defaultState`**——注意 **`sephirot` 字段已删除**，容量 4 建议进 GameConfig）②L1 生命树 ③L2 编成 ④L3 部门场景 + HUD ⑤相机控制（FDD-12）⑥工作闭环 ⑦结算与次日。
+- **M2/M3 里程碑细化**（2026-09-12 重订）：M2 = 主菜单 + 设置 + **状态机/屏幕栈**（含加载屏）；M3 = 一天能玩，**7 小步**：①**M3-0 补 `Bands.json` + `BandNodeData`**（FDD-08 §8.4 字段 **`id`/`band`/`leader`/`leaderId`/`layer`/`nodeIndex`/`unlockDay`/`defaultState`**——注意 **`sephirot` 字段已删除**，`unlockDay` 序列 = 1/6/11/16/**20/25/30**/36/41/46，容量 4 建议进 GameConfig）。
+   ⚠️ **当前 `Assets/Data/Bands.json` 不可用**：有 JSON 语法错误（`"band": "Poppin'Party",` 尾部多余逗号）+ 中文字段名 `"部门"` + 仍用 `sephirot` + 只有 1 个节点。正确模板见 FDD §8.4（10 条齐全）。②L1 生命树 ③L2 编成 ④L3 部门场景 + HUD ⑤相机控制（FDD-12）⑥工作闭环 ⑦结算与次日。
 - 晚风会自学抢跑（已自建 MainMenu 场景/GameManager），交付前先盘点工作区避免覆盖其成果；其 GameManager 单例骨架已保留并入 YuetanMingqu 命名空间。
 - **当前脚本清单**（`Assets/Scripts/`，共 13 个 .cs，全部 UTF-8 无 BOM）：
   - `Entities/`：Character.cs、BandMember.cs、Aberrations.cs、GameConfig.cs、SettingsData.cs、**GameState.cs**
