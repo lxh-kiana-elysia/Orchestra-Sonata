@@ -1,7 +1,7 @@
 # FDD.md — 乐团鸣曲 详细功能设计文档
 
-> 文档版本：v2.7（2026-09-12）
-> 上游依据：`GDD.docx` v1.11 · `ARCHITECTURE.md` v1.3 · `agent.md` v3.4
+> 文档版本：v2.8（2026-09-12）
+> 上游依据：`GDD.docx` v1.11 · `ARCHITECTURE.md` v1.4 · `agent.md` v3.7
 > 定位：把 GDD 中的规则**拆解为可实现的技术规格**——状态机、流程图、数据结构、配置项、边界条件。
 >
 > **与 GDD 的分工（重要，避免重复维护）**：
@@ -21,6 +21,13 @@
 - **数值来源标注**：`[GDD §X.X]` = 已定稿；`[GDD §X.X 占位]` = 草案待确认
 - **接口签名**：与 `ARCHITECTURE.md §4` 保持一致
 - **纯函数**：标记 🔬 的逻辑必须实现为不依赖 MonoBehaviour 的纯函数（可单测）
+- **JSON 结构约定（JsonUtility 专用，务必遵守）**：
+  1. **顶层必须是对象，不能是数组**——`JsonUtility.FromJson` **不支持顶层数组**，一律写成
+     `{ "<复数键名>": [ ... ] }`。全项目键名：`characters` / `bandMembers` / `aberrations` / `bands` / `equipments`。
+  2. 键名一律 **camelCase**（键名不匹配时 JsonUtility **静默失败**、字段留默认值，不报错）。
+  3. 字段类型需可序列化（基本类型 / string / `[Serializable]` 类 / `List<T>`）；**不支持 `Dictionary`**。
+  4. 不支持 `null` 赋给值类型字段；配置里用空字符串或哨兵值表达"无"。
+  > 以上 4 条已在实际数据文件中统一（`Assets/Data/*.json` 顶层均为 `{ "xxx": [...] }`）。
 
 ---
 
@@ -394,11 +401,13 @@ OPEN --部门异想体数达上限 4--> OPEN（满，仍可进入但不可再放
 
 ### 8.4 数据结构（`Bands.json`，已定稿）
 
-> ⚠️ **当前工程 `Assets/Data/` 尚无部门节点数据源**（只有 Characters / BandMembers / Aberrations / GameConfig 四件套）。
-> M3 生命树开工前**必须先补此文件**，否则无数据可渲染。
+> ✅ **该文件已于 2026-09-12 创建**（`Assets/Data/Bands.json`，含 `bands` 键与 10 个节点），M3 生命树可直接读取。
+> ⚠️ 但工程内当前那份是按**旧排法**（v1.7）写的（节点 2/3 未对调、中层仍是 Day21/26/31、MyGO 队长为空）
+> ——**以本节这份为准**，直接覆盖。
 
 ```jsonc
-[
+{
+  "bands": [
   { "id": "band_ppp",  "band": "Poppin'Party",        "leader": "户山香澄",   "leaderId": "band_ppp_kasumi",   "layer": "Asiyah",   "nodeIndex": 1,  "unlockDay": 1,  "defaultState": "OPEN"   },
   { "id": "band_pasp", "band": "Pastel*Palettes",     "leader": "丸山彩",     "leaderId": "band_pasp_aya",     "layer": "Asiyah",   "nodeIndex": 2,  "unlockDay": 6,  "defaultState": "LOCKED" },
   { "id": "band_aglw", "band": "Afterglow",           "leader": "美竹兰",     "leaderId": "band_aglw_ran",     "layer": "Asiyah",   "nodeIndex": 3,  "unlockDay": 11, "defaultState": "LOCKED" },
@@ -409,8 +418,11 @@ OPEN --部门异想体数达上限 4--> OPEN（满，仍可进入但不可再放
   { "id": "band_mygo", "band": "MyGO!!!!!",           "leader": "高松灯",     "leaderId": "band_mygo_tomori",  "layer": "Atziluth", "nodeIndex": 8,  "unlockDay": 36, "defaultState": "LOCKED" },
   { "id": "band_amu",  "band": "Ave Mujica",          "leader": "丰川祥子",   "leaderId": "band_amu_sakiko",   "layer": "Atziluth", "nodeIndex": 9,  "unlockDay": 41, "defaultState": "LOCKED" },
   { "id": "band_mwt",  "band": "梦限大 MewType",       "leader": "仲町阿拉蕾", "leaderId": "band_mwt_arale",    "layer": "Atziluth", "nodeIndex": 10, "unlockDay": 46, "defaultState": "LOCKED" }
-]
+  ]
+}
 ```
+- ⚠️ **JSON 顶层必须是对象**：`JsonUtility` **不支持顶层数组**，故一律用 `{ "<复数键名>": [ ... ] }` 包裹
+  （全项目约定：`characters` / `bandMembers` / `aberrations` / `bands` / `equipments`，见 §0 通用约定）。
 - 键名一律 **camelCase**（JsonUtility 静默失败风险，见 §4.4）。
 - `aberrationCapacity`（每部门上限，草案 4）建议写入 `GameConfig.json` 而非逐节点配置。
 - 运行时状态（当前已收容异想体列表、节点实际状态）**不写进配置**，运行时生成并入存档。
@@ -682,7 +694,8 @@ class WaypointGraph {
 
 ### 11.7 数据结构（Equipments.json）
 ```jsonc
-[
+{
+  "equipments": [
   {
     "id": "ego_weapon_sun_01",
     "name": "未熄的拨片",
@@ -717,9 +730,11 @@ class WaypointGraph {
     "bonus": { "empathy": 3 },
     "dropWeight": 30
   }
-]
+  ]
+}
 ```
 > 说明：`unlockCost` / `damage` / `bonus` / `dropWeight` 均为**占位值**，待 Phase 2 数值表统一（关联 GDD §3.2 异想体点数）。
+> ⚠️ 顶层用 `{ "equipments": [ ... ] }` 包裹——JsonUtility **不支持顶层数组**（见 §0 通用约定）。
 
 ### 11.8 关键逻辑 🔬
 ```csharp
@@ -836,6 +851,7 @@ void MoveCamera(Vector2 delta) {
 | 日期 | 版本 | 说明 |
 |---|---|---|
 | 2026-09-07 | v1.0 | 初版：8 个模块 FDD（日循环/工作/异想体/员工/考验/存档/剧情/编成节点），含状态机、关键逻辑、验收点；数值配置汇总与 7 项待确认清单。**不含美术风格**（项目美术不基于脑叶） |
+| 2026-09-12 | v2.8 | **修正 JSON 顶层结构与过时说明**：①§8.4 `Bands.json` 与 §11.7 `Equipments.json` 的示例由**裸数组**改为 `{ "bands": [...] }` / `{ "equipments": [...] }`——**JsonUtility 不支持顶层数组**，原示例会让程序直接解析失败；②§8.4 顶部「工程尚无 Bands.json、M3 开工前必须先补」的过时说明改为「**已于 2026-09-12 创建**，但内容为旧排法，以本节为准覆盖」；③**§0 通用约定新增「JSON 结构约定」4 条**（顶层必须是对象 / camelCase / 不支持 Dictionary / 不支持 null） |
 | 2026-09-12 | v2.7 | **纠正误判**：明确"异想体绑定 = 可选彩蛋、不要求一一对应、不阻塞流程"，并在 §8.5 增加"**异想体池未补全不影响生命树与日循环运行，不得作为任何里程碑前置条件**"（GDD §3.2）。依据升 GDD v1.10 |
 | 2026-09-12 | v2.6 | **全文档质检修复**：①**修 FDD-01 §1.2 状态机**——补上 `TREE_OVERVIEW(L1 生命树)` 节点，入口由「编成」改为「剧情 → 生命树 → 加载 → 编成」，两条回滚路径改回当日 L1 生命树（原文仍写「回到当日编成」，与 GDD/ARCHITECTURE 冲突）；②**修章节编号重号**：`§9 数值配置汇总` → `附录 A`、`§10 待确认清单` → `附录 B`（含 `10.1` → `B.1`）、`§12 测试场景清单` → `附录 C`，消除与 FDD-09/10/12 的撞号及「两个 10.1」；③§8.4 标题去掉「草案，待策划确认」（已定稿）；④§8.2 补 F15 交互规范引用；⑤数值来源引用升为 GDD v1.9 |
 | 2026-09-12 | v2.5 | **全面对齐脑叶（GDD v1.8 同步）**：①中层部门顺序与天数改为 **中央本部 Day20 → 惩戒部 Day25 → 福利部 Day30**（原 福利21/中央本部26/惩戒31），`Bands.json` 的 `nodeIndex`/`unlockDay` 随之重排（RAS 7→6、Morfonica 6→7）；②**队长更正**：Afterglow 队长 = **美竹兰**（原误写为贝斯手上原绯玛丽）、MyGO!!!!! 队长 = **高松灯**（原留空）；③节点 2/3 对调（情报部 = Pastel*Palettes 丸山彩、安保部 = Afterglow 美竹兰）；④§8.6 验收点改为按 10 个 `unlockDay` 升序校验。⚠️ 副作用已记录：三个中层部门都在 5 的倍数天开放，与记忆日重合 |
