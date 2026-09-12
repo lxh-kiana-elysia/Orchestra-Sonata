@@ -1,7 +1,7 @@
 # Band_Members.md — 乐队少女名册（独立策划文件）
 
-> 文档版本：v1.0（2026-09-08）
-> 依据：`GDD.docx` v1.5（§3.3 两套数据库分离）
+> 文档版本：v1.1（2026-09-12）
+> 依据：`GDD.docx` v1.7（§3.3 两套数据库分离、§3.14 队长制）
 > 用途：**策划专用名册**。新增/修改乐队少女只改本文件，不必动 GDD。程序同���数据文件：`Assets/Data/BandMembers.json`
 >
 > ⚠️ 策划填写规则：
@@ -35,6 +35,7 @@
 | `unlockCondition` | string | **加入条件**：完成某任务 / 异想体点数达档位 |
 | `equipment` | dict | **专属装备**：`weapon` / `armor` / `accessory`（各含 id、名称、加成） |
 | `linkedAberrationId` | string | 绑定的同位体异想体（见 Aberrations.md） |
+| `isLeader` | bool | **是否为所属乐队队长**（GDD v1.7 定稿）。队长**不是独立 NPC**：可正常派遣工作、崩溃退场 3 天、**不死亡**；队长身份只额外提供部门被动加成、专属台词、生命树节点显示名，**不影响数值与流程** |
 
 > **静态配置 vs 运行时状态（重要）**：
 > 上表是**策划填写的静态配置**（写入 `BandMembers.json` 的模板数据）。
@@ -48,6 +49,29 @@
 
 ---
 
+## 队长速查表（GDD v1.7 定稿 · 部门部长 = 乐队队长）
+
+> 已联网核实原著设定。**脑叶 Sephirot 名（Malkuth / Yesod / …）已全部移除**，节点上显示队长名。
+> 顺序按「剧情 / 情感深度递进」排列（用户 2026-09-12 拍板）。
+
+| 节点 | 脑叶部门 | 乐队 | 队长 | 担当 | 解锁天 | 核实备注 |
+|---|---|---|---|---|---|---|
+| 1 | 控制部 | Poppin'Party | **户山香澄** | Vo&Gt | Day 1 | 多源一致；"以香澄为中心" |
+| 2 | 情报部 | Afterglow | **上原绯玛丽** ⚠️ | Ba | Day 6 | 官方「担任 Afterglow 的队长」——**不是美竹兰**（兰是主唱兼吉他、乐队中心） |
+| 3 | 安保部 | Pastel*Palettes | **丸山彩** | Vo | Day 11 | 官方偏"center"表述，英文源标 Leader |
+| 4 | 培训部 | Hello, Happy World! | **弦卷心** | Vo | Day 16 | 发起者 |
+| 5 | 福利部 | Roselia | **凑友希那** | Vo | Day 21 | "主唱兼领队"，纱夜台词佐证 |
+| 6 | 中央本部 | Morfonica | **仓田真白** | Vo | Day 26 | 乐队简介以真白为中心 |
+| 7 | 惩戒部 | RAISE A SUILEN | **CHU²（玉田千裕）** ⚠️ | DJ/制作人 | Day 31 | 组建者 + 全部词曲；另有源说是 LAYER（和奏瑞依） |
+| 8 | 记录部 | MyGO!!!!! | **待定** ⚠️ | — | Day 36 | **原著官方未设队长**，粉丝多推高松灯或千早爱音 → `TODO(设计待确认)` |
+| 9 | 研发部 | Ave Mujica | **丰川祥子 / Oblivionis** | Key | Day 41 | "怀着觉悟组建了 Ave Mujica" |
+| 10 | 构筑部 | 梦限大 MewType | **仲町阿拉蕾** | Vo | Day 46 | 官方"带领 MewType 前进的 Powerful Girl" |
+
+> ⚠️ 三处风险点（策划可推翻，改完记得同步 `Bands.json` 的 `leader` / `leaderId`）：
+> ① Afterglow 队长是**贝斯手绯玛丽**；② RAS 队长**有争议**（CHU² vs LAYER）；③ MyGO!!!!! **原著无队长**，需自定。
+
+---
+
 ## 名册
 
 ### 1. 户山香澄（Poppin'Party）
@@ -57,6 +81,7 @@
 | id | `band_ppp_kasumi` |
 | name | 户山香澄 |
 | band | Poppin'Party |
+| isLeader | **true**（节点 1 控制部 · 队长） |
 | 四维 | HP 10 / SP 10 / 演奏水平 10 / 共感 10（默认） |
 | skill | 香澄的活力：**一次工作后恢复同乐队成员精神** |
 
